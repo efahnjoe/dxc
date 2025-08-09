@@ -1,0 +1,13 @@
+[package]
+name = "dxc-hooks"
+edition.workspace = true
+version.workspace = true
+authors.workspace = true
+description = ""
+license.workspace = true
+repository = ""
+homepage.workspace = true
+keywords = []
+
+[dependencies]
+once_cell = { workspace = true }

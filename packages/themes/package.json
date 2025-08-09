@@ -1,0 +1,33 @@
+{
+  "name": "dxc-themes",
+  "version": "0.1.0",
+  "description": "",
+  "author": "Efahn Joe",
+  "license": "MIT",
+  "homepage": "https://github.com/efahnjoe/dxc#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/efahnjoe/dxc.git"
+  },
+  "bugs": "https://github.com/efahnjoe/dxc/issues",
+  "main": "./out/client/main.js",
+  "type": "module",
+  "scripts": {
+    "build": "sass assets/scss/index.scss:assets/css/index.css --style=compressed --no-source-map"
+  },
+  "os": [
+    "win64",
+    "linux"
+  ],
+  "cpu": [
+    "x64"
+  ],
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "sass": "^1.89.2"
+  },
+  "peerDependencies": {}
+}

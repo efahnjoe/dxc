@@ -1,0 +1,15 @@
+.container {
+  background-color: blue;
+}
+
+.aside {
+  background-color: red;
+}
+
+.main {
+  background-color: yellow;
+}
+
+.footer {
+  background-color: green;
+}

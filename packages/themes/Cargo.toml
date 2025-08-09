@@ -1,0 +1,17 @@
+[package]
+name = "dxc-themes"
+edition.workspace = true
+version.workspace = true
+authors.workspace = true
+description = ""
+license.workspace = true
+repository = ""
+homepage.workspace = true
+keywords = []
+
+[dependencies]
+dioxus = { workspace = true }
+
+[build-dependencies]
+grass = "0.13.4"
+walkdir = "2.3"

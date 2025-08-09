@@ -1,0 +1,16 @@
+[package]
+name = "dxc-components"
+edition.workspace = true
+version.workspace = true
+authors.workspace = true
+description = ""
+license.workspace = true
+repository.workspace = true
+homepage.workspace = true
+keywords = []
+
+[dependencies]
+dioxus = { workspace = true }
+dxc-hooks = { workspace = true }
+dxc-themes = { workspace = true }
+once_cell = { workspace = true }

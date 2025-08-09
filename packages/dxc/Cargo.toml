@@ -1,0 +1,17 @@
+[package]
+name = "dxc"
+edition.workspace = true
+version.workspace = true
+authors.workspace = true
+description = ""
+license.workspace = true
+repository.workspace = true
+homepage.workspace = true
+keywords = ["ui", "component", "dioxus", "web", "desktop"]
+
+[dependencies]
+dxc-components = { workspace = true }
+dxc-hooks = { workspace = true }
+dxc-icons = { workspace = true }
+dxc-themes = { workspace = true }
+dxc-utils = { workspace = true }

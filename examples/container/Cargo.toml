@@ -1,0 +1,41 @@
+[package]
+name = "dxc-example-container"
+edition = "2021"
+version = "0.1.0"
+authors = ["efahnjoe"]
+license = "MIT"
+repository = "https://github.com/efahnjoe/dxc"
+homepage = "https://github.com/efahnjoe/dxc#README.md"
+readme = "README.md"
+
+[dependencies]
+
+[dev-dependencies]
+dioxus = { workspace = true }
+dxc = { workspace = true }
+dxc-components = { workspace = true }
+dxc-hooks = { workspace = true }
+dxc-icons = { workspace = true }
+dxc-themes = { workspace = true }
+dxc-utils = { workspace = true }
+once_cell = { workspace = true }
+serde = { workspace = true }
+uuid = { workspace = true }
+web-sys = { workspace = true }
+
+[features]
+default = ["web"]
+server = ["dioxus/server"]
+web = ["dioxus/web"]
+desktop = ["dioxus/desktop"]
+mobile = ["dioxus/mobile"]
+
+[profile.wasm-dev]
+inherits = "dev"
+opt-level = 1
+
+[profile.server-dev]
+inherits = "dev"
+
+[profile.android-dev]
+inherits = "dev"

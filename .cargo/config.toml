@@ -1,0 +1,6 @@
+[source.crates-io]
+replace-with = "aliyun"
+# registry = "https://github.com/rust-lang/crates.io-index/"
+
+[registries]
+aliyun = { index = "https://mirrors.aliyun.com/crates.io-index/" }
