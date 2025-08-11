@@ -1,0 +1,28 @@
+use dioxus::prelude::*;
+use dxc::prelude::*;
+
+pub fn main() {
+    dioxus::launch(app);
+}
+
+#[component]
+pub fn app() -> Element {
+    rsx!(
+        document::Link{rel: "stylesheet", href: DXC_THEMES}
+
+        div {
+            DxcLink {
+                href: "https://example.com".to_string(),
+                "Visit Example"
+            }
+            DxcLink {
+                r#type: "primary".to_string(),
+                disabled: false,
+                underline: Some("always".to_string()),
+                href: Some("https://example.com".to_string()),
+                target: Some("_blank".to_string()),
+                "Click me"
+            }
+        }
+    )
+}

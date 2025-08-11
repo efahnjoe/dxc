@@ -1,5 +1,5 @@
 [package]
-name = "dxc-example-container"
+name = "dxc-example-icons"
 edition.workspace = true
 version.workspace = true
 authors.workspace = true
@@ -12,15 +12,6 @@ homepage.workspace = true
 [dev-dependencies]
 dioxus = { workspace = true }
 dxc = { workspace = true }
-dxc-components = { workspace = true }
-dxc-hooks = { workspace = true }
-dxc-icons = { workspace = true }
-dxc-themes = { workspace = true }
-dxc-utils = { workspace = true }
-once_cell = { workspace = true }
-serde = { workspace = true }
-uuid = { workspace = true }
-web-sys = { workspace = true }
 
 [features]
 default = ["web"]
