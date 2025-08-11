@@ -1,13 +1,29 @@
 {
-  "editor.tabSize": 4,
-  "[rust]": {
-    "editor.defaultFormatter": "rust-lang.rust-analyzer",
-    "editor.formatOnSave": true
-  },
-  "rust-analyzer.checkOnSave": true,
-  "rust-analyzer.cargo.checkOnSave.command": "clippy",
-  "rust-analyzer.rustfmt.overrideCommand": null,
   "editor.formatOnPaste": true,
   "editor.formatOnSave": true,
-  "editor.formatOnType": true
+  "editor.formatOnType": true,
+  "editor.autoIndent": "keep",
+  "editor.quickSuggestions": {
+    "strings": true,
+    "other": true,
+    "comments": false
+  },
+  "editor.insertSpaces": true,
+  "diffEditor.ignoreTrimWhitespace": false,
+  "editor.defaultColorDecorators": "never",
+  "editor.suggest.insertMode": "replace",
+  "editor.tabSize": 2,
+  "[rust]": {
+    "editor.formatOnSave": true,
+    "editor.tabSize": 4,
+    "editor.defaultFormatter": "rust-lang.rust-analyzer",
+  },
+  "[toml]": {
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "tamasfe.even-better-toml"
+  },
+  "rust-analyzer.check.workspace": true,
+  "rust-analyzer.checkOnSave": true,
+  "rust-analyzer.cargo.features": "all",
+  "rust-analyzer.check.features": "all"
 }
