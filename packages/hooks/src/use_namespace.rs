@@ -10,10 +10,10 @@ fn bem(namespace: &str, block: &str, block_suffix: &str, element: &str, modifier
         cls = format! {"{}-{}", cls, block_suffix };
     }
     if element != "" {
-        cls = format! {"{}-{}", cls, element };
+        cls = format! {"{}__{}", cls, element };
     }
     if modifier != "" {
-        cls = format! {"{}-{}", cls, modifier };
+        cls = format! {"{}--{}", cls, modifier };
     }
     return cls;
 }
