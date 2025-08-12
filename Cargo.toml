@@ -10,7 +10,7 @@ members = [
 
 [workspace.package]
 edition = "2021"
-version = "0.1.0"
+version = "0.1.1"
 authors = ["efahnjoe"]
 license = "MIT"
 repository = "https://github.com/efahnjoe/dxc"
@@ -33,23 +33,18 @@ serde = { version = "1.0.219", features = ["derive"] }
 [package]
 name = "dxc-example"
 edition = "2021"
-version = "0.1.0"
-authors = ["efahnjoe"]
-license = "MIT"
-repository = "https://github.com/efahnjoe/dxc"
-homepage = "https://github.com/efahnjoe/dxc#README.md"
-readme = "README.md"
+version.workspace = true
+authors.workspace = true
+license.workspace = true
+repository.workspace = true
+homepage.workspace = true
+publish = false
 
 [dependencies]
 
 [dev-dependencies]
 dioxus = { workspace = true }
 dxc = { workspace = true }
-dxc-components = { workspace = true }
-dxc-hooks = { workspace = true }
-dxc-icons = { workspace = true }
-dxc-themes = { workspace = true }
-dxc-utils = { workspace = true }
 once_cell = { workspace = true }
 serde = { workspace = true }
 
@@ -78,6 +73,10 @@ path = "examples/container/src/main.rs"
 [[example]]
 name = "icons"
 path = "examples/icons/src/main.rs"
+
+[[example]]
+name = "image"
+path = "examples/image/src/main.rs"
 
 [[example]]
 name = "link"

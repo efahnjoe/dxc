@@ -3,7 +3,9 @@ mod icon;
 mod input;
 mod link;
 mod navigation;
+mod image;
 
+pub use image::DxcImage;
 pub use container::{DxcAside, DxcContainer, DxcFooter, DxcHeader, DxcMain};
 pub use icon::DxcIcon;
 pub use input::DxcInput;
