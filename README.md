@@ -7,6 +7,11 @@
 
 ### Components
 
+Basic
+
+- [x] Link
+- [x] Icon
+
 Containers
 
 - [x] Container
@@ -14,3 +19,8 @@ Containers
 - [x] Header
 - [x] Footer
 - [x] Main
+
+Data
+
+- [x] Image
+- [ ] Image Viewer
