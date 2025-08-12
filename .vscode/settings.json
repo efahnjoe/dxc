@@ -1,18 +1,9 @@
 {
+  "editor.tabSize": 2,
   "editor.formatOnPaste": true,
   "editor.formatOnSave": true,
   "editor.formatOnType": true,
-  "editor.autoIndent": "keep",
-  "editor.quickSuggestions": {
-    "strings": true,
-    "other": true,
-    "comments": false
-  },
-  "editor.insertSpaces": true,
-  "diffEditor.ignoreTrimWhitespace": false,
-  "editor.defaultColorDecorators": "never",
   "editor.suggest.insertMode": "replace",
-  "editor.tabSize": 2,
   "[rust]": {
     "editor.formatOnSave": true,
     "editor.tabSize": 4,
@@ -21,6 +12,23 @@
   "[toml]": {
     "editor.formatOnSave": true,
     "editor.defaultFormatter": "tamasfe.even-better-toml"
+  },
+  "[yaml]": {
+    "editor.insertSpaces": true,
+    "editor.autoIndent": "keep",
+    "diffEditor.ignoreTrimWhitespace": false,
+    "editor.defaultColorDecorators": "never",
+    "editor.quickSuggestions": {
+      "strings": true,
+      "other": true,
+      "comments": false
+    }
+  },
+  "[json]": {
+    "editor.quickSuggestions": {
+      "strings": true
+    },
+    "editor.suggest.insertMode": "replace"
   },
   "rust-analyzer.check.workspace": true,
   "rust-analyzer.checkOnSave": true,
