@@ -1,10 +1,12 @@
 use dioxus::prelude::*;
 use dxc_hooks::UseNamespace;
+use dxc_macros::{classes, props};
 
-#[derive(Clone, Props, PartialEq)]
-pub struct IconProps {
-    #[props(default)]
-    children: Option<Element>,
+props! {
+    IconProps {
+        class: String,
+        children: Element,
+    }
 }
 
 /// Use icons from iconfont.
@@ -16,23 +18,20 @@ pub struct IconProps {
 /// use dxc::prelude::*;
 ///
 /// rsx! {
-///   Icon {
-///     Apple {}
+///   DxcIcon {
+///     Apple { }
 ///   }
 /// }
 /// ```
 #[component]
-pub fn DxcIcon(props:IconProps) -> Element {
-    let IconProps {
-        children,
-    } = props;
-
+pub fn DxcIcon(props: IconProps) -> Element {
     let ns = UseNamespace::new("icon", None);
+    let classes = classes!{ns.b(), props.class.as_deref().unwrap_or("")};
 
     rsx! {
       i {
-        class: ns.b(),
-        {children}
+        class: classes,
+        {props.children}
       }
     }
 }
