@@ -86,7 +86,7 @@ impl<'a> UseNamespace<'a> {
         match state {
             Some(true) => format!("{}{}", STATE_PREFIX, name),
             Some(false) => String::new(),
-            None => name.to_string(),
+            None => format!("{}{}", STATE_PREFIX, name),
         }
     }
 
