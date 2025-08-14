@@ -90,9 +90,10 @@ macro_rules! props {
             $($field:ident : $type:ty),* $(,)?
         }
     ) => {
-        #[derive(Clone, PartialEq, Debug)]
+        #[derive(Clone, Props, PartialEq, Debug)]
         pub struct $name {
             $(
+                #[props(default)]
                 pub $field: Option<$type>
             ),*
         }
@@ -104,9 +105,10 @@ macro_rules! props {
         },
         derive: [$($extra:ident),*]
     ) => {
-        #[derive(Clone, PartialEq, Debug, $($extra),*)]
+        #[derive(Clone, Props, PartialEq, Debug, $($extra),*)]
         pub struct $name {
             $(
+                #[props(default)]
                 pub $field: Option<$type>
             ),*
         }
