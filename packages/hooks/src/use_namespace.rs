@@ -83,10 +83,10 @@ impl<'a> UseNamespace<'a> {
     }
 
     pub fn is_(&self, name: &str, state: Option<bool>) -> String {
-        if state == Some(true) {
-            format!("{}{}", STATE_PREFIX, name)
-        } else {
-            String::new()
+        match state {
+            Some(true) => format!("{}{}", STATE_PREFIX, name),
+            Some(false) => String::new(),
+            None => name.to_string(),
         }
     }
 
