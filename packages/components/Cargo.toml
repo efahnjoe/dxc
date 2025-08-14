@@ -11,6 +11,8 @@ keywords = []
 
 [dependencies]
 dioxus = { workspace = true }
+dxc-macros ={ workspace = true}
 dxc-hooks = { workspace = true }
 dxc-themes = { workspace = true }
 once_cell = { workspace = true }
+web-sys = { workspace = true }
