@@ -82,11 +82,11 @@ impl<'a> UseNamespace<'a> {
         )
     }
 
-    pub fn is_(&self, name: &str, state: bool) -> String {
-        if state {
+    pub fn is_(&self, name: &str, state: Option<bool>) -> String {
+        if state == Some(true) {
             format!("{}{}", STATE_PREFIX, name)
         } else {
-            "".to_string()
+            String::new()
         }
     }
 

@@ -76,7 +76,7 @@ pub fn DxcContainer(
 
     rsx! {
         section {
-            class: format!("{} {} {}", ns.b(), ns.is_("vertical", is_vertical), class.unwrap_or_default()),
+            class: format!("{} {} {}", ns.b(), ns.is_("vertical", Some(is_vertical)), class.unwrap_or_default()),
             {children}
         }
     }
