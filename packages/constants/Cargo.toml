@@ -1,0 +1,12 @@
+[package]
+name = "dxc-constants"
+edition.workspace = true
+version.workspace = true
+authors.workspace = true
+description = ""
+license.workspace = true
+repository.workspace = true
+homepage.workspace = true
+keywords = []
+
+[dependencies]
