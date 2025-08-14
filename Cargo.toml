@@ -2,8 +2,10 @@
 resolver = "2"
 members = [
   "packages/components",
+  "packages/constants",
   "packages/dxc",
   "packages/hooks",
+  "packages/macros",
   "packages/themes",
   "packages/utils",
 ]
@@ -21,12 +23,26 @@ readme = "README.md"
 dioxus = { version = "0.6.3", features = ["router", "fullstack"] }
 dxc = { path = "packages/dxc" }
 dxc-components = { path = "packages/components" }
+dxc-constants = { path = "packages/constants" }
 dxc-hooks = { path = "packages/hooks" }
 dxc-icons = "0.1.3"
+dxc-macros = { path = "packages/macros" }
 dxc-themes = { path = "packages/themes" }
 dxc-utils = { path = "packages/utils" }
 once_cell = "1.21.3"
 serde = { version = "1.0.219", features = ["derive"] }
+wasm-bindgen = "0.2.100"
+web-sys = { version = "0.3.77", features = [
+  "Document",
+  "Element",
+  "Node",
+  "console",
+  "Event",
+  "EventTarget",
+  "HtmlElement",
+  "KeyboardEvent",
+  "Window",
+] }
 
 # This is a "virtual package"
 # It is not meant to be published, but is used so "cargo run --example XYZ" works properly
@@ -81,3 +97,7 @@ path = "examples/image/src/main.rs"
 [[example]]
 name = "link"
 path = "examples/link/src/main.rs"
+
+[[example]]
+name = "teleport"
+path = "examples/teleport/src/main.rs"

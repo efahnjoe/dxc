@@ -1,0 +1,12 @@
+[package]
+name = "dxc-macros"
+edition.workspace = true
+version.workspace = true
+authors.workspace = true
+description = ""
+license.workspace = true
+repository = ""
+homepage.workspace = true
+keywords = []
+
+[dependencies]
