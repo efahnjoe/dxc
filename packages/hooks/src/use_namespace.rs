@@ -57,7 +57,11 @@ impl<'a> UseNamespace<'a> {
     }
 
     pub fn m_(&self, modifier: &str) -> String {
-        bem(self.namespace(), self.block, "", "", modifier)
+        if modifier == "" {
+            String::new()
+        } else {
+            bem(self.namespace(), self.block, "", "", modifier)
+        }
     }
 
     pub fn be_(&self, block_suffix: &str, element: &str) -> String {
