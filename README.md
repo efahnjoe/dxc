@@ -9,6 +9,7 @@
 
 Basic
 
+- [x] Button
 - [x] Link
 - [x] Icon
 
