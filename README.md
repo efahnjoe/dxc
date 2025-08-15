@@ -5,12 +5,11 @@ A concise, modern dioxus component library
 
 ## Components
 
-### Themes
+Themes
+
 - [x] Default theme
 - [x] Light theme
 - [x] Dark theme
-
-### Components
 
 Basic
 
