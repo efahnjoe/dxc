@@ -16,7 +16,7 @@ pub fn app() -> Element {
                 "Visit Example"
             }
             DxcLink {
-                r#type: "primary".to_string(),
+                type_: "primary".to_string(),
                 disabled: false,
                 underline: Some("always".to_string()),
                 href: Some("https://example.com".to_string()),
