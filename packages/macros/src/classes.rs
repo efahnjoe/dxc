@@ -1,97 +1,130 @@
-/// Combines multiple class names into a single space-separated `String`, skipping empty ones.
-///
-/// This macro is useful for dynamically constructing CSS class strings in UI frameworks
-/// (e.g., web frontends using Yew, Dioxus, or similar), where you want to conditionally
-/// include classes or avoid extra whitespace from empty entries.
-///
-/// ## Behavior
-///
-/// - Accepts zero or more expressions that can be converted to [`Display`] (like `&str`, `String`, etc.).
-/// - Skips any class name that is an empty string after conversion.
-/// - Joins the remaining non-empty class names with a single space.
-/// - Trailing commas are allowed (Rust-style).
-///
-/// ## Examples
-///
-/// ### Empty input
-///
-/// ```rust
-/// use dxc_macros::classes;
-///
-/// let class = classes!();
-/// assert_eq!(class, "");
-/// ```
-///
-/// ### Basic usage
-///
-/// ```rust
-/// use dxc_macros::classes;
-///
-/// let class = classes!("btn", "btn-primary");
-/// assert_eq!(class, "btn btn-primary");
-/// ```
-///
-/// ### With empty or conditional values
-///
-/// ```rust
-/// use dxc_macros::classes;
-///
-/// let is_active = true;
-/// let size: Option<&str> = Some("large");
-/// let theme = "";
-///
-/// let class = classes!(
-///     "button",
-///     "btn",
-///     if is_active { "active" } else { "" },
-///     size.unwrap_or(""),
-///     theme, // will be skipped
-/// );
-///
-/// assert_eq!(class, "button btn active large");
-/// ```
-///
-/// ### With trailing comma
-///
-/// ```rust
-/// use dxc_macros::classes;
-///
-/// let class = classes!("x", "y", "z",);
-/// assert_eq!(class, "x y z");
-/// ```
-///
-/// ### Using with expressions and variables
-///
-/// ```rust
-/// use dxc_macros::classes;
-///
-/// let size = "small";
-/// let class = classes!("panel", format!("panel-{}", size));
-/// assert_eq!(class, "panel panel-small");
-/// ```
-///
-/// ## Usage Notes
-///
-/// - All inputs are converted to strings via [`ToString`] or [`Display`].
-/// - If all inputs are empty, the result is an empty string.
-/// - No extra spaces or duplicates are generated — ideal for HTML `class` attributes.
-///
-/// This macro helps prevent invalid or bloated class attributes by filtering out empties
-/// and reducing boilerplate.
-#[macro_export]
-macro_rules! classes {
-    () => {
-        String::new()
-    };
+use quote::quote;
+use syn::{
+    parse::{Parse, ParseStream},
+    punctuated::Punctuated,
+    Expr, ExprIf, ExprLit, Lit, Token,
+};
 
-    ($($class:expr),* $(,)?) => {{
-        let mut classes = Vec::new();
-        $(
-            let s: String = $class.to_string();
-            if !s.is_empty() {
-                classes.push(s);
+pub struct ClassListInput(Vec<ClassPart>);
+
+impl Parse for ClassListInput {
+    fn parse(input: ParseStream) -> syn::Result<Self> {
+        let exprs = Punctuated::<Expr, Token![,]>::parse_terminated(input)?;
+        let parts = exprs.into_iter().map(ClassPart::from_expr).collect();
+        Ok(ClassListInput(parts))
+    }
+}
+
+impl ClassListInput {
+    pub fn into_token_stream(self) -> proc_macro2::TokenStream {
+        let stmts = self.0.into_iter().map(|part| part.into_stmt());
+        quote! {{
+            let mut classes = String::new();
+            #(#stmts)*
+            classes.trim_end().to_string()
+        }}
+    }
+}
+
+enum ClassPart {
+    Literal(String),
+    Conditional(ExprIf),
+    Expression(Expr),
+}
+
+impl ClassPart {
+    fn from_expr(expr: Expr) -> Self {
+        match expr {
+            Expr::Lit(ExprLit {
+                lit: Lit::Str(s), ..
+            }) => Self::Literal(s.value()),
+            Expr::Lit(ExprLit {
+                lit: Lit::Bool(b), ..
+            }) => Self::Literal(b.value.to_string()),
+            Expr::Lit(ExprLit {
+                lit: Lit::Int(i), ..
+            }) => Self::Literal(i.base10_parse::<u64>().unwrap().to_string()),
+            Expr::If(expr_if) => Self::Conditional(expr_if),
+            other => Self::Expression(other),
+        }
+    }
+
+    fn into_stmt(self) -> proc_macro2::TokenStream {
+        match self {
+            Self::Literal(s) => {
+                if s.is_empty() {
+                    quote! {}
+                } else {
+                    quote! {
+                        classes.push_str(#s);
+                        classes.push(' ');
+                    }
+                }
             }
-        )*
-        classes.join(" ")
-    }};
+            Self::Conditional(expr_if) => {
+                let cond = &expr_if.cond;
+                let then_branch = &expr_if.then_branch;
+                let else_branch = &expr_if.else_branch;
+
+                let then_exprs = then_branch.stmts.iter().filter_map(|stmt| {
+                    if let syn::Stmt::Expr(expr, _) = stmt {
+                        Some(quote! {
+                            classes.push_str(#expr);
+                            classes.push(' ');
+                        })
+                    } else {
+                        None
+                    }
+                });
+
+                let else_clause = if let Some((_, else_expr)) = else_branch {
+                    match &**else_expr {
+                        Expr::Block(block) => {
+                            let else_stmts = &block.block.stmts;
+                            let else_exprs = else_stmts.iter().filter_map(|stmt| {
+                                if let syn::Stmt::Expr(expr, _) = stmt {
+                                    Some(quote! {
+                                        classes.push_str(#expr);
+                                        classes.push(' ');
+                                    })
+                                } else {
+                                    None
+                                }
+                            });
+                            quote! { else { #(#else_exprs)* } }
+                        }
+                        Expr::Lit(lit) => {
+                            quote! {
+                                else {
+                                    classes.push_str(#lit);
+                                    classes.push(' ');
+                                }
+                            }
+                        }
+                        _ => quote! {},
+                    }
+                } else {
+                    quote! {}
+                };
+
+                quote! {
+                    if #cond {
+                        #(#then_exprs)*
+                    } #else_clause
+                }
+            }
+            Self::Expression(expr) => {
+                quote! {
+                    {
+                        let s = #expr; // 先求值
+                        let s_str: &str = s.as_ref();
+                        if !s_str.is_empty() {
+                            classes.push_str(s_str);
+                            classes.push(' ');
+                        }
+                    }
+                }
+            }
+        }
+    }
 }

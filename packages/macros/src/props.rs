@@ -1,116 +1,80 @@
-/// Creates a new public struct with optional fields and derives common traits.
-///
-/// This macro generates a `pub` struct where each field is wrapped in `Option<T>`,
-/// and automatically derives [`Clone`], [`PartialEq`], and [`Debug`] by default.
-/// You can optionally specify additional traits to derive using the `derive:` keyword.
-///
-/// # Usage
-///
-/// Basic usage:
-/// ```rust
-/// use dxc_macros::props;
-///
-/// props! {
-///     MyProps {
-///         name: String,
-///         age: i32,
-///     }
-/// }
-/// ```
-///
-/// This expands to:
-/// ```rust
-/// #[derive(Clone, PartialEq, Debug)]
-/// pub struct MyProps {
-///     pub name: Option<String>,
-///     pub age: Option<i32>,
-/// }
-/// ```
-///
-/// To derive additional traits (e.g., `Copy`), include the `derive:` clause:
-/// ```rust
-/// use dxc_macros::props;
-///
-/// props! {
-///     MyProps {
-///         x: f64,
-///         y: f64,
-///     },
-///     derive: [Copy]
-/// }
-/// ```
-///
-/// This expands to:
-/// ```rust
-/// #[derive(Clone, PartialEq, Debug, Copy)]
-/// pub struct MyProps {
-///     pub x: Option<f64>,
-///     pub y: Option<f64>,
-/// }
-/// ```
-///
-/// > **Note**: When deriving `Copy`, all field types must also implement `Copy`.
-///
-/// # Field Semantics
-///
-/// All generated fields are of type `Option<T>`, representing that they are optional
-/// and default to `None`. This is useful for builder-pattern or configuration structs.
-///
-/// # Supported Derives
-///
-/// You can append any valid trait to `derive:` as long as it's supported by Rust's `#[derive(...)]`,
-/// such as:
-/// - `Copy`
-/// - `Default`
-/// - `PartialOrd`, `Ord`
-/// - `Serialize`, `Deserialize` (if using `serde`)
-///
-/// Example with multiple traits:
-/// ```rust,ignore
-/// use dxc_macros::props;
-/// use serde::{Serialize, Deserialize};
-/// 
-/// props! {
-///     Config {
-///         timeout: u64,
-///         enabled: bool,
-///     },
-///     derive: [Default, Serialize, Deserialize]
-/// }
-/// ```
-///
-/// # See Also
-///
-/// Consider using [`#[derive(Default)]`](https://doc.rust-lang.org/std/default/trait.Default.html)
-/// in combination with this macro for convenient initialization.
-#[macro_export]
-macro_rules! props {
-    (
-        $name:ident {
-            $($field:ident : $type:ty),* $(,)?
+use proc_macro::TokenStream;
+use quote::quote;
+use syn::{parse::Parse, parse_macro_input, punctuated::Punctuated, Ident, Token, Type};
+
+pub struct PropsMacroInput {
+    pub name: Ident,
+    pub fields: Vec<(Ident, Type)>,
+    pub extra_derives: Vec<Ident>,
+}
+
+impl Parse for PropsMacroInput {
+    fn parse(input: syn::parse::ParseStream) -> syn::Result<Self> {
+        let name = input.parse::<Ident>()?;
+        let content;
+        syn::braced!(content in input);
+
+        let fields = content.parse_terminated(|input| {
+            let field = input.parse::<Ident>()?;
+            input.parse::<Token![:]>()?;
+            let ty = input.parse::<Type>()?;
+            Ok((field, ty))
+        }, Token![,])?;
+
+        let mut extra_derives = Vec::new();
+
+        if input.peek(Token![,]) {
+            input.parse::<Token![,]>()?;
+            if input.peek(Ident) {
+                let ident: Ident = input.parse()?;
+                if ident.to_string() == "derive" {
+                    let derive_content;
+                    syn::bracketed!(derive_content in input);
+                    let derives_punctuated = derive_content.parse_terminated(Ident::parse, Token![,])?;
+                    extra_derives = derives_punctuated.into_iter().collect();
+                } else {
+                    return Err(syn::Error::new(ident.span(), "expected `derive`"));
+                }
+            }
         }
-    ) => {
-        #[derive(Clone, Props, PartialEq, Debug)]
-        pub struct $name {
-            $(
-                #[props(default)]
-                pub $field: Option<$type>
-            ),*
+
+        Ok(PropsMacroInput {
+            name,
+            fields: fields.into_iter().collect(),
+            extra_derives,
+        })
+    }
+}
+
+pub fn impl_props(input: TokenStream) -> TokenStream {
+    let input = parse_macro_input!(input as PropsMacroInput);
+
+    let struct_name = input.name;
+    let fields = input.fields;
+    let extra_derives = input.extra_derives;
+
+    // 基础 derive
+    let mut all_derives = vec![
+        quote!(Clone),
+        quote!(Props),
+        quote!(PartialEq),
+        quote!(Debug),
+    ];
+    all_derives.extend(extra_derives.iter().map(|d| quote!(#d)));
+
+    let field_definitions = fields.iter().map(|(ident, ty)| {
+        quote! {
+            #[props(default)]
+            pub #ident: Option<#ty>
+        }
+    });
+
+    let expanded = quote! {
+        #[derive(#(#all_derives),*)]
+        pub struct #struct_name {
+            #(#field_definitions,)*
         }
     };
 
-    (
-        $name:ident {
-            $($field:ident : $type:ty),* $(,)?
-        },
-        derive: [$($extra:ident),*]
-    ) => {
-        #[derive(Clone, Props, PartialEq, Debug, $($extra),*)]
-        pub struct $name {
-            $(
-                #[props(default)]
-                pub $field: Option<$type>
-            ),*
-        }
-    };
+    TokenStream::from(expanded)
 }

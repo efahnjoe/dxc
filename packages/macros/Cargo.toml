@@ -9,4 +9,14 @@ repository = ""
 homepage.workspace = true
 keywords = []
 
+[lib]
+proc-macro = true
+
 [dependencies]
+syn = { version = "2.0.105", features = ["full", "parsing"] }
+quote = "1.0.40"
+proc-macro2 = "1.0.97"
+darling = "0.21.2"
+
+[dev-dependencies]
+dioxus ={ workspace = true}
