@@ -5,6 +5,7 @@ use dxc_macros::{classes, props};
 props! {
     IconProps {
         class: String,
+        onclick: EventHandler<MouseEvent>,
         children: Element,
     }
 }
@@ -31,6 +32,7 @@ pub fn DxcIcon(props: IconProps) -> Element {
     rsx! {
       i {
         class: classes,
+        onclick: props.onclick.clone().unwrap_or_default(),
         {props.children}
       }
     }
