@@ -1,7 +1,9 @@
+use std::thread::sleep;
+
 use crate::DxcIcon;
 use dioxus::prelude::*;
 use dxc_hooks::UseNamespace;
-use dxc_icons::spawn_icon;
+use dxc_icons::{spawn_icon, CircleClose, Hide, View};
 use dxc_macros::{classes, props};
 
 props! {
@@ -62,37 +64,49 @@ props! {
 #[component]
 pub fn DxcInput(props: InputProps) -> Element {
     // State
-    let input_type = use_signal(|| match props.type_.as_deref() {
-        Some("textarea") => "textarea".to_string(),
-        _ => "input".to_string(),
-    });
-    let mut input_value = use_signal(|| props.model_value.clone().unwrap_or(String::new()));
-    let input_disable = use_signal(|| props.disabled.unwrap_or(false).clone());
+    let input_id = props.id.clone();
+    let input_type = use_signal(|| props.type_.clone().unwrap_or("text".to_string()));
+    let input_resize = match props.resize.as_deref() {
+        Some("both") => String::from("both"),
+        Some("horizontal") => String::from("horizontal"),
+        Some("vertical") => String::from("vertical"),
+        _ => String::new(),
+    };
+    let input_size = match props.size.as_deref() {
+        Some("default") => String::from("default"),
+        Some("small") => String::from("small"),
+        Some("large") => String::from("large"),
+        _ => String::from("default"),
+    };
+
+    let mut input_value = use_signal(|| props.model_value.unwrap_or(String::new()));
+    let input_disable = use_signal(|| props.disabled.unwrap_or(false));
 
     let clearable = use_signal(|| props.clearable.unwrap_or(false));
     let read_only = use_signal(|| props.read_only.unwrap_or(false));
     let show_word_limit = use_signal(|| props.show_word_limit.unwrap_or(false));
     let show_password = use_signal(|| props.show_password.unwrap_or(false));
 
-    let native_input_value = use_signal(|| props.model_value.clone());
-
     let validate_state = use_signal(|| Some(String::new()));
 
     let need_status_icon = use_signal(|| false);
 
     let is_focused = use_signal(|| false);
+
     let hovering = use_signal(|| false);
+    let mut password_visible = use_signal(|| false);
+
     let show_clear = use_signal(|| {
         clearable()
             && !input_disable()
             && !read_only()
-            && !!native_input_value().is_some()
+            && input_value().is_empty()
             && (is_focused() || hovering())
     });
-    let mut password_visible = use_signal(|| false);
 
     let show_pwd_visible =
-        use_signal(|| show_password() && !input_disable() && !!native_input_value().is_some());
+        use_signal(|| show_password() && !input_disable() && input_value().is_empty());
+
     let is_word_limit_visible = use_signal(|| {
         show_word_limit()
             && !!props.max_length.is_some()
@@ -102,15 +116,9 @@ pub fn DxcInput(props: InputProps) -> Element {
             && !read_only()
             && !show_password()
     });
-    let text_length = use_signal(|| {
-        native_input_value
-            .read()
-            .as_ref()
-            .map(|s| s.len())
-            .unwrap_or(0)
-    });
+    let text_length = use_signal(|| input_value().chars().count());
     let input_exceed =
-        use_signal(|| !!is_word_limit_visible() && text_length() > props.max_length.unwrap_or(0));
+        use_signal(|| !!is_word_limit_visible() && (text_length() > props.max_length.unwrap_or(0)));
     let suffix_visible = use_signal(|| {
         !!props.suffix.is_some()
             || !!props.suffix.is_some()
@@ -120,24 +128,13 @@ pub fn DxcInput(props: InputProps) -> Element {
             || (!!validate_state().is_some() && need_status_icon())
     });
 
-    // Events
-    // let focus_ctl = use_focus_controller(UseFocusControllerOptions {
-    //     disabled: input_disable(),
-    //     before_blur: Some(EventHandler::new(move |event: FocusEvent| {
-    //         if Some(true) == props.validate_event {
-    //             // props.validate_event(event);
-    //         }
-    //     })),
-    //     ..Default::default()
-    // });
-
     // Styles
     let ns_textarea = UseNamespace::new("textarea", None);
     let ns_input = UseNamespace::new("input", None);
 
     let container_classes = classes! {
         if props.type_ == Some("textarea".to_string()) {&ns_textarea.b()} else {&ns_input.b();},
-        &ns_input.m_(props.size.as_deref().unwrap_or("")),
+        &ns_input.m_(input_size.as_ref()),
         &ns_input.is_("disabled", Some(input_disable())),
         &ns_input.is_("exceed", Some(input_exceed())),
 
@@ -156,11 +153,20 @@ pub fn DxcInput(props: InputProps) -> Element {
         ns_input.is_("focus", Some(is_focused()))
     };
 
+    let textarea_calc_style = format!("");
+    let textarea_style = format!(
+        "{} {} {}",
+        props.input_style.unwrap_or(String::new()),
+        textarea_calc_style,
+        props.resize.unwrap_or(String::new())
+    );
+
     rsx! {
         div {
+            id: input_id,
             class:container_classes,
 
-            if "textarea".to_string() != input_type(){
+            if "textarea" != input_type(){
 
                 if props.prepend.is_some() {
                     div {
@@ -235,18 +241,26 @@ pub fn DxcInput(props: InputProps) -> Element {
                                         onclick: move |_| {
                                             input_value.set(String::new());
                                         },
-                                        children: spawn_icon("CircleClose")
+                                        // children: spawn_icon("CircleClose")
+                                        CircleClose { }
                                     }
                                 }
 
                                 if show_pwd_visible() {
                                     DxcIcon {
+                                        id: "show-pwd-icon".to_string(),
                                         class: format!("{} {}", ns_input.e_("icon"),ns_input.e_("password")),
                                         onclick: move |_| {
                                             password_visible.set(!password_visible());
                                         },
-                                        // children: rsx!{if show_password_visible(){spawn_icon("View")} else {spawn_icon("Hide")}}
-                                        children: spawn_icon("View")
+                                        children: match show_pwd_visible() {
+                                            true => rsx! {
+                                                View {}
+                                            },
+                                            _ => rsx! {
+                                                Hide {}
+                                            },
+                                        },
                                     }
                                 }
                             }
