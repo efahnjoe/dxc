@@ -1632,7 +1632,7 @@ checksum = "92773504d58c093f6de2459af4af33faa518c13451eb8f2b5698ed3d36e7c813"
 
 [[package]]
 name = "dxc"
-version = "0.1.4"
+version = "0.1.5"
 dependencies = [
  "dxc-components",
  "dxc-hooks",
@@ -1643,7 +1643,7 @@ dependencies = [
 
 [[package]]
 name = "dxc-components"
-version = "0.1.4"
+version = "0.1.5"
 dependencies = [
  "dioxus",
  "dxc-hooks",
@@ -1656,11 +1656,11 @@ dependencies = [
 
 [[package]]
 name = "dxc-constants"
-version = "0.1.4"
+version = "0.1.5"
 
 [[package]]
 name = "dxc-example"
-version = "0.1.4"
+version = "0.1.5"
 dependencies = [
  "dioxus",
  "dxc",
@@ -1670,7 +1670,7 @@ dependencies = [
 
 [[package]]
 name = "dxc-hooks"
-version = "0.1.4"
+version = "0.1.5"
 dependencies = [
  "dioxus",
  "dxc-constants",
@@ -1691,7 +1691,7 @@ dependencies = [
 
 [[package]]
 name = "dxc-macros"
-version = "0.1.4"
+version = "0.1.5"
 dependencies = [
  "darling 0.21.2",
  "dioxus",
@@ -1702,7 +1702,7 @@ dependencies = [
 
 [[package]]
 name = "dxc-themes"
-version = "0.1.4"
+version = "0.1.5"
 dependencies = [
  "dioxus",
  "grass",
@@ -1711,7 +1711,7 @@ dependencies = [
 
 [[package]]
 name = "dxc-utils"
-version = "0.1.4"
+version = "0.1.5"
 
 [[package]]
 name = "encoding_rs"

@@ -28,7 +28,7 @@ Containers
 
 Form
 
-- [ ] Input
+- [x] Input
 - [ ] Textarea
 - [ ] Input Number
 - [ ] Input Tag
