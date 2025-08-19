@@ -1,5 +1,3 @@
-use std::thread::sleep;
-
 use crate::DxcIcon;
 use dioxus::prelude::*;
 use dxc_hooks::UseNamespace;
@@ -13,7 +11,7 @@ props! {
         size: String,
         disabled: bool,
         exceed: bool,
-        model_value: String,
+        value: Signal<String>,
         minlength: usize,
         max_length: usize,
         resize: String,
@@ -65,12 +63,13 @@ props! {
 pub fn DxcInput(props: InputProps) -> Element {
     // State
     let input_id = props.id.clone();
-    let input_type = use_signal(|| props.type_.clone().unwrap_or("text".to_string()));
+    let input_type = props.type_.clone().unwrap_or("text".to_string());
     let input_resize = match props.resize.as_deref() {
+        Some("none") => String::from("none"),
         Some("both") => String::from("both"),
         Some("horizontal") => String::from("horizontal"),
         Some("vertical") => String::from("vertical"),
-        _ => String::new(),
+        _ => String::from("none"),
     };
     let input_size = match props.size.as_deref() {
         Some("default") => String::from("default"),
@@ -79,7 +78,7 @@ pub fn DxcInput(props: InputProps) -> Element {
         _ => String::from("default"),
     };
 
-    let mut input_value = use_signal(|| props.model_value.unwrap_or(String::new()));
+    let mut input_value = props.value.unwrap_or(Signal::new(String::new()));
     let input_disable = use_signal(|| props.disabled.unwrap_or(false));
 
     let clearable = use_signal(|| props.clearable.unwrap_or(false));
@@ -96,7 +95,7 @@ pub fn DxcInput(props: InputProps) -> Element {
     let hovering = use_signal(|| false);
     let mut password_visible = use_signal(|| false);
 
-    let show_clear = use_signal(|| {
+    let show_clear = use_signal(move || {
         clearable()
             && !input_disable()
             && !read_only()
@@ -105,7 +104,7 @@ pub fn DxcInput(props: InputProps) -> Element {
     });
 
     let show_pwd_visible =
-        use_signal(|| show_password() && !input_disable() && input_value().is_empty());
+        use_signal(move || show_password() && !input_disable() && input_value().is_empty());
 
     let is_word_limit_visible = use_signal(|| {
         show_word_limit()
@@ -116,7 +115,7 @@ pub fn DxcInput(props: InputProps) -> Element {
             && !read_only()
             && !show_password()
     });
-    let text_length = use_signal(|| input_value().chars().count());
+    let text_length = use_signal(move || input_value().chars().count());
     let input_exceed =
         use_signal(|| !!is_word_limit_visible() && (text_length() > props.max_length.unwrap_or(0)));
     let suffix_visible = use_signal(|| {
@@ -166,7 +165,7 @@ pub fn DxcInput(props: InputProps) -> Element {
             id: input_id,
             class:container_classes,
 
-            if "textarea" != input_type(){
+            if "textarea" != input_type{
 
                 if props.prepend.is_some() {
                     div {
@@ -198,11 +197,11 @@ pub fn DxcInput(props: InputProps) -> Element {
                         r#type: match (show_password(), password_visible()) {
                             (true, true) => "text".to_string(),
                             (true, false) => "password".to_string(),
-                            (false, _) => input_type(),
+                            (false, _) => input_type,
                         },
                         disabled: input_disable(),
                         readonly: read_only(),
-                        value: input_value(),
+                        value: "{input_value()}",
                         autocomplete: props.auto_complete,
                         tabindex: props.tab_index,
                         aria_label: props.aria_label,
@@ -212,8 +211,7 @@ pub fn DxcInput(props: InputProps) -> Element {
                         autofocus: props.autofocus,
                         role: props.container_role,
                         inputmode: props.inputmode,
-                        // oncompositionstart
-                        oninput: props.oninput.clone().unwrap_or_default(),
+                        
                         onfocus: props.onfocus.clone().unwrap_or_default(),
                         onblur: props.onblur.clone().unwrap_or_default(),
                         onchange: props.onchange.clone().unwrap_or_default(),
@@ -241,7 +239,6 @@ pub fn DxcInput(props: InputProps) -> Element {
                                         onclick: move |_| {
                                             input_value.set(String::new());
                                         },
-                                        // children: spawn_icon("CircleClose")
                                         CircleClose { }
                                     }
                                 }
