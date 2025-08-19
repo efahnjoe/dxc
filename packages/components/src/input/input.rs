@@ -90,12 +90,12 @@ pub fn DxcInput(props: InputProps) -> Element {
 
     let need_status_icon = use_signal(|| false);
 
-    let is_focused = use_signal(|| false);
+    let mut is_focused = use_signal(|| false);
 
     let hovering = use_signal(|| false);
     let mut password_visible = use_signal(|| false);
 
-    let show_clear = use_signal(move || {
+    let show_clear = use_signal(|| {
         clearable()
             && !input_disable()
             && !read_only()
@@ -104,7 +104,7 @@ pub fn DxcInput(props: InputProps) -> Element {
     });
 
     let show_pwd_visible =
-        use_signal(move || show_password() && !input_disable() && input_value().is_empty());
+        use_signal(|| show_password() && !input_disable() && input_value().is_empty());
 
     let is_word_limit_visible = use_signal(|| {
         show_word_limit()
@@ -211,9 +211,18 @@ pub fn DxcInput(props: InputProps) -> Element {
                         autofocus: props.autofocus,
                         role: props.container_role,
                         inputmode: props.inputmode,
-                        
-                        onfocus: props.onfocus.clone().unwrap_or_default(),
-                        onblur: props.onblur.clone().unwrap_or_default(),
+                        oninput: move |envent | {
+                            input_value.set(envent.value());
+                            props.oninput.clone().unwrap_or_default();
+                        },
+                        onfocus: move |_| {
+                            is_focused.set(true);
+                            props.onfocus.clone().unwrap_or_default();
+                        },
+                        onblur: move |_| {
+                            is_focused.set(false);
+                            props.onblur.clone().unwrap_or_default();
+                        },
                         onchange: props.onchange.clone().unwrap_or_default(),
                         onkeydown: props.onkeydown.clone().unwrap_or_default(),
                     }
@@ -245,18 +254,14 @@ pub fn DxcInput(props: InputProps) -> Element {
 
                                 if show_pwd_visible() {
                                     DxcIcon {
-                                        id: "show-pwd-icon".to_string(),
                                         class: format!("{} {}", ns_input.e_("icon"),ns_input.e_("password")),
                                         onclick: move |_| {
                                             password_visible.set(!password_visible());
                                         },
-                                        children: match show_pwd_visible() {
-                                            true => rsx! {
-                                                View {}
-                                            },
-                                            _ => rsx! {
-                                                Hide {}
-                                            },
+                                        if password_visible() {
+                                            View {}
+                                        } else {
+                                            Hide {}
                                         },
                                     }
                                 }
