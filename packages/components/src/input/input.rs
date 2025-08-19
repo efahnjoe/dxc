@@ -92,15 +92,15 @@ pub fn DxcInput(props: InputProps) -> Element {
 
     let mut is_focused = use_signal(|| false);
 
-    let hovering = use_signal(|| false);
+    let mut hovering = use_signal(|| false);
     let mut password_visible = use_signal(|| false);
 
-    let show_clear = use_signal(|| {
+    let show_clear = use_memo(move|| {
         clearable()
             && !input_disable()
             && !read_only()
-            && input_value().is_empty()
-            && (is_focused() || hovering())
+            && !input_value().is_empty()
+            // && (is_focused() || hovering())
     });
 
     let show_pwd_visible =
@@ -118,13 +118,16 @@ pub fn DxcInput(props: InputProps) -> Element {
     let text_length = use_signal(move || input_value().chars().count());
     let input_exceed =
         use_signal(|| !!is_word_limit_visible() && (text_length() > props.max_length.unwrap_or(0)));
-    let suffix_visible = use_signal(|| {
-        !!props.suffix.is_some()
-            || !!props.suffix.is_some()
+    
+    let is_suffix = props.suffix.is_some();
+
+    let suffix_visible = use_memo(move || {
+        is_suffix
+            // || !!props.suffix.is_some()
             || show_clear()
             || show_password()
             || is_word_limit_visible()
-            || (!!validate_state().is_some() && need_status_icon())
+            || (validate_state().is_some() && need_status_icon())
     });
 
     // Styles
@@ -223,6 +226,8 @@ pub fn DxcInput(props: InputProps) -> Element {
                             is_focused.set(false);
                             props.onblur.clone().unwrap_or_default();
                         },
+                        onmouseover: move |_| hovering.set(true),
+                        onmouseleave: move |_| hovering.set(false),
                         onchange: props.onchange.clone().unwrap_or_default(),
                         onkeydown: props.onkeydown.clone().unwrap_or_default(),
                     }
@@ -244,8 +249,9 @@ pub fn DxcInput(props: InputProps) -> Element {
 
                                 if show_clear() {
                                     DxcIcon {
-                                        class: format!("[{} {}]", ns_input.e_("icon"), ns_input.e_("clear")),
-                                        onclick: move |_| {
+                                        class: format!("{} {}", ns_input.e_("icon"), ns_input.e_("clear")),
+                                        onclick: move |event:MouseEvent| {
+                                            event.prevent_default();
                                             input_value.set(String::new());
                                         },
                                         CircleClose { }
