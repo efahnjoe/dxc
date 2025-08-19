@@ -1651,7 +1651,6 @@ dependencies = [
  "dxc-macros",
  "dxc-themes",
  "once_cell",
- "web-sys",
 ]
 
 [[package]]
@@ -1672,11 +1671,7 @@ dependencies = [
 name = "dxc-hooks"
 version = "0.1.5"
 dependencies = [
- "dioxus",
- "dxc-constants",
  "once_cell",
- "wasm-bindgen",
- "web-sys",
 ]
 
 [[package]]

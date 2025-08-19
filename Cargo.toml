@@ -31,18 +31,6 @@ dxc-themes = { path = "packages/themes" }
 dxc-utils = { path = "packages/utils" }
 once_cell = "1.21.3"
 serde = { version = "1.0.219", features = ["derive"] }
-wasm-bindgen = "0.2.100"
-web-sys = { version = "0.3.77", features = [
-  "Document",
-  "Element",
-  "Node",
-  "console",
-  "Event",
-  "EventTarget",
-  "HtmlElement",
-  "KeyboardEvent",
-  "Window",
-] }
 
 # This is a "virtual package"
 # It is not meant to be published, but is used so "cargo run --example XYZ" works properly
