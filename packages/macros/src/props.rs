@@ -1,6 +1,6 @@
 use proc_macro::TokenStream;
 use quote::quote;
-use syn::{parse::Parse, parse_macro_input, punctuated::Punctuated, Ident, Token, Type};
+use syn::{parse::Parse, parse_macro_input, Ident, Token, Type};
 
 pub struct PropsMacroInput {
     pub name: Ident,
