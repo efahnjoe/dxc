@@ -15,4 +15,5 @@ dxc-macros ={ workspace = true}
 dxc-hooks = { workspace = true }
 dxc-icons ={ workspace = true}
 dxc-themes = { workspace = true }
+dxc-types = { workspace = true }
 once_cell = { workspace = true }

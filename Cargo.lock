@@ -1650,6 +1650,7 @@ dependencies = [
  "dxc-icons",
  "dxc-macros",
  "dxc-themes",
+ "dxc-types",
  "once_cell",
 ]
 
@@ -1702,6 +1703,13 @@ dependencies = [
  "dioxus",
  "grass",
  "walkdir",
+]
+
+[[package]]
+name = "dxc-types"
+version = "0.1.5"
+dependencies = [
+ "serde",
 ]
 
 [[package]]
