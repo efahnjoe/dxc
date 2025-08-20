@@ -1638,6 +1638,7 @@ dependencies = [
  "dxc-hooks",
  "dxc-icons",
  "dxc-themes",
+ "dxc-types",
  "dxc-utils",
 ]
 
