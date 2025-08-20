@@ -53,7 +53,6 @@ pub fn impl_props(input: TokenStream) -> TokenStream {
     let fields = input.fields;
     let extra_derives = input.extra_derives;
 
-    // 基础 derive
     let mut all_derives = vec![
         quote!(Clone),
         quote!(Props),
