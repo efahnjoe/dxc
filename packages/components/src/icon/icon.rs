@@ -1,11 +1,14 @@
 use dioxus::prelude::*;
 use dxc_hooks::UseNamespace;
+use dxc_icons::spawn_icon;
 use dxc_macros::{classes, props};
 
 props! {
     IconProps {
         id: String,
         class: String,
+        style: String,
+        icon: String,
         onclick: EventHandler<MouseEvent>,
         children: Element,
     }
@@ -34,8 +37,17 @@ pub fn DxcIcon(props: IconProps) -> Element {
       i {
         id: props.id.as_deref(),
         class: classes,
+        style: props.style,
         onclick: props.onclick.clone().unwrap_or_default(),
-        {props.children}
+        
+        match props.icon {
+          Some(icon) => {
+            spawn_icon(&icon)
+          },
+          None => {
+            props.children
+          }
+        }
       }
     }
 }
