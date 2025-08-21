@@ -1,25 +1,28 @@
 use proc_macro::TokenStream;
 use quote::quote;
-use syn::{parse::Parse, parse_macro_input, Ident, Token, Type};
+use syn::{
+    braced,
+    parse::{Parse, ParseStream},
+    parse_macro_input,
+    punctuated::Punctuated,
+    token::Comma,
+    Field, Ident, Result, Token,
+};
 
 pub struct PropsMacroInput {
     pub name: Ident,
-    pub fields: Vec<(Ident, Type)>,
+    pub fields: Vec<Field>,
     pub extra_derives: Vec<Ident>,
 }
 
 impl Parse for PropsMacroInput {
-    fn parse(input: syn::parse::ParseStream) -> syn::Result<Self> {
+    fn parse(input: ParseStream) -> Result<Self> {
         let name = input.parse::<Ident>()?;
         let content;
-        syn::braced!(content in input);
+        braced!(content in input);
 
-        let fields = content.parse_terminated(|input| {
-            let field = input.parse::<Ident>()?;
-            input.parse::<Token![:]>()?;
-            let ty = input.parse::<Type>()?;
-            Ok((field, ty))
-        }, Token![,])?;
+        let fields_punctuated: Punctuated<Field, Comma> =
+            content.parse_terminated(Field::parse_named, Token![,])?;
 
         let mut extra_derives = Vec::new();
 
@@ -30,7 +33,8 @@ impl Parse for PropsMacroInput {
                 if ident.to_string() == "derive" {
                     let derive_content;
                     syn::bracketed!(derive_content in input);
-                    let derives_punctuated = derive_content.parse_terminated(Ident::parse, Token![,])?;
+                    let derives_punctuated =
+                        derive_content.parse_terminated(Ident::parse, Token![,])?;
                     extra_derives = derives_punctuated.into_iter().collect();
                 } else {
                     return Err(syn::Error::new(ident.span(), "expected `derive`"));
@@ -38,9 +42,11 @@ impl Parse for PropsMacroInput {
             }
         }
 
+        let fields = fields_punctuated.into_iter().collect();
+
         Ok(PropsMacroInput {
             name,
-            fields: fields.into_iter().collect(),
+            fields,
             extra_derives,
         })
     }
@@ -61,8 +67,13 @@ pub fn impl_props(input: TokenStream) -> TokenStream {
     ];
     all_derives.extend(extra_derives.iter().map(|d| quote!(#d)));
 
-    let field_definitions = fields.iter().map(|(ident, ty)| {
+    let field_definitions = fields.iter().map(|field| {
+        let attrs = &field.attrs;
+        let ident = &field.ident.as_ref().unwrap();
+        let ty = &field.ty;
+
         quote! {
+            #(#attrs)*
             #[props(default)]
             pub #ident: Option<#ty>
         }
