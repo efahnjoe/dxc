@@ -1,18 +1,18 @@
 use proc_macro::TokenStream;
 use quote::quote;
 use syn::{
-    braced,
+    braced, parenthesized,
     parse::{Parse, ParseStream},
     parse_macro_input,
     punctuated::Punctuated,
     token::Comma,
-    Field, Ident, Result, Token,
+    Error, Field, Ident, Result, Token,Path
 };
 
 pub struct PropsMacroInput {
     pub name: Ident,
     pub fields: Vec<Field>,
-    pub extra_derives: Vec<Ident>,
+    pub extra_derives: Vec<syn::Path>,
 }
 
 impl Parse for PropsMacroInput {
@@ -32,12 +32,15 @@ impl Parse for PropsMacroInput {
                 let ident: Ident = input.parse()?;
                 if ident.to_string() == "derive" {
                     let derive_content;
-                    syn::bracketed!(derive_content in input);
+                    parenthesized!(derive_content in input);
+
+                    // Usage of Path::parse_mod_style
+                    // like Serialize or serde::Serialize
                     let derives_punctuated =
-                        derive_content.parse_terminated(Ident::parse, Token![,])?;
+                        derive_content.parse_terminated(Path::parse_mod_style, Token![,])?;
                     extra_derives = derives_punctuated.into_iter().collect();
                 } else {
-                    return Err(syn::Error::new(ident.span(), "expected `derive`"));
+                    return Err(Error::new(ident.span(), "expected `derive`"));
                 }
             }
         }
@@ -62,6 +65,7 @@ pub fn impl_props(input: TokenStream) -> TokenStream {
     let mut all_derives = vec![
         quote!(Clone),
         quote!(Props),
+        quote!(Default),
         quote!(PartialEq),
         quote!(Debug),
     ];
