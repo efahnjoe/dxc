@@ -77,10 +77,6 @@ name = "container"
 path = "examples/container/src/main.rs"
 
 [[example]]
-name = "image"
-path = "examples/image/src/main.rs"
-
-[[example]]
 name = "link"
 path = "examples/link/src/main.rs"
 
