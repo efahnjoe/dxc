@@ -33,6 +33,7 @@ dxc-types = { path = "packages/types" }
 dxc-utils = { path = "packages/utils" }
 once_cell = "1.21.3"
 serde = { version = "1.0.219", features = ["derive"] }
+strum = { version = "0.27.2", features = ["derive"] }
 
 # This is a "virtual package"
 # It is not meant to be published, but is used so "cargo run --example XYZ" works properly
