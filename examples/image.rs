@@ -7,10 +7,10 @@ pub fn main() {
 
 pub fn app() -> Element {
     let img_list = vec![
-        String::from("https://picsum.photos/200/300"),
-        String::from("https://picsum.photos/200/300"),
-        String::from("https://picsum.photos/200/300"),
-        String::from("https://picsum.photos/200/300"),
+        String::from("https://picsum.photos/400/250?random=1"),
+        String::from("https://picsum.photos/400/250?random=2"),
+        String::from("https://picsum.photos/400/250?random=3"),
+        String::from("https://picsum.photos/400/250?random=4"),
     ];
 
     rsx!(
@@ -19,9 +19,10 @@ pub fn app() -> Element {
         div {
             style: "width: 200px; height: 200px;",
             DxcImage {
-                src: "https://picsum.photos/200/300",
-                crossorigin: "anonymous",
-                preview_src_list: img_list
+                src: "https://picsum.photos/400/250",
+                crossorigin:Crossorigin::Anonymous,
+                preview_src_list: img_list.clone(),
+                show_progress: true,
             }
         }
     )
