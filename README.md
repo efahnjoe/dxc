@@ -41,8 +41,9 @@ Data
 Other
 
 - [ ] Mask Layer
-- [ ] Event Bus
-- [ ] Slot
+- [ ] Focus Trap
+- [ ] Teleport
+- [x] Slot
 - [ ] Portal
 - [ ] Transition
 - [ ] I18n
