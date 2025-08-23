@@ -36,7 +36,7 @@ Form
 Data
 
 - [x] Image
-- [ ] Image Viewer
+- [x] Image Viewer
 
 Other
 
