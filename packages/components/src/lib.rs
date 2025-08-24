@@ -1,26 +1,29 @@
 mod aside;
-mod footer;
 mod button;
 mod container;
 mod focus_trap;
+mod footer;
 mod icon;
 mod image;
 mod image_viewer;
 mod input;
 mod link;
+#[path = "main/mod.rs"]
+mod main;
 mod menu;
 mod teleport;
 mod transition;
 
-pub use footer::DxcFooter;
 pub use aside::DxcAside;
 pub use button::DxcButton;
 pub use container::DxcContainer;
+pub use footer::DxcFooter;
 pub use icon::DxcIcon;
 pub use image::DxcImage;
 pub use image_viewer::DxcImageViewer;
 pub use input::DxcInput;
 pub use link::DxcLink;
+pub use main::DxcMain;
 pub use menu::{DxcMenu, DxcMenuItem};
 pub use teleport::DxcTeleport;
 pub use transition::DxcTransition;
