@@ -10,4 +10,5 @@ homepage.workspace = true
 keywords = []
 
 [dependencies]
+dxc-types = { workspace = true }
 once_cell = { workspace = true }
