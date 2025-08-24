@@ -1,3 +1,5 @@
+mod aside;
+mod footer;
 mod button;
 mod container;
 mod focus_trap;
@@ -9,8 +11,8 @@ mod link;
 mod menu;
 mod teleport;
 mod transition;
-mod aside;
 
+pub use footer::DxcFooter;
 pub use aside::DxcAside;
 pub use button::DxcButton;
 pub use container::DxcContainer;
