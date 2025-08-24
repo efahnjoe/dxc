@@ -1,44 +1,19 @@
+use super::props::ButtonProps;
 use crate::DxcIcon;
 use dioxus::prelude::*;
 use dxc_hooks::UseNamespace;
 use dxc_icons::{spawn_icon, Loading};
-use dxc_macros::{classes, props};
-
-props! {
-    ButtonProps {
-        size: String,
-        disabled: bool,
-        type_: String,
-        icon: String,
-        navtive_type: String,
-        loading: bool,
-        loading_icon: String,
-        plain: bool,
-        text: bool,
-        link: bool,
-        bg: bool,
-        autofocus: bool,
-        round: bool,
-        circle: bool,
-        color: String,
-        dark: bool,
-        auto_insert_space: bool,
-        tag: Vec<String>,
-        handle_click: fn(),
-
-        class: String,
-        style: String,
-        children: Element,
-    }
-}
+use dxc_macros::classes;
 
 #[component]
 pub fn DxcButton(props: ButtonProps) -> Element {
+    let size = use_signal(|| props.size());
+
     let ns = UseNamespace::new("button", None);
     let classes = classes!(
         ns.b(),
         ns.m_(props.type_.as_deref().unwrap_or("")),
-        ns.m_(props.size.as_deref().unwrap_or("")),
+        ns.m_(size().to_string().as_str()),
         ns.is_("disabled", Some(props.disabled.unwrap_or(false))),
         ns.is_("loading", Some(props.loading.unwrap_or(false))),
         ns.is_("plain", Some(props.plain.unwrap_or(false))),
@@ -57,9 +32,9 @@ pub fn DxcButton(props: ButtonProps) -> Element {
         button {
             class: classes,
             style: props.style,
-            onclick: move |_| {
-                if let Some(handler) = props.handle_click {
-                    handler();
+            onclick: move |evt| {
+                if let Some(onclick) = props.onclick.as_ref() {
+                    onclick.call(evt);
                 }
             },
             if loading() {
