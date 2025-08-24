@@ -9,9 +9,11 @@ mod link;
 mod menu;
 mod teleport;
 mod transition;
+mod aside;
 
+pub use aside::DxcAside;
 pub use button::DxcButton;
-pub use container::{DxcAside, DxcContainer, DxcFooter, DxcHeader, DxcMain};
+pub use container::DxcContainer;
 pub use icon::DxcIcon;
 pub use image::DxcImage;
 pub use image_viewer::DxcImageViewer;

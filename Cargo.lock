@@ -1673,6 +1673,7 @@ dependencies = [
 name = "dxc-hooks"
 version = "0.1.7"
 dependencies = [
+ "dxc-types",
  "once_cell",
 ]
 
