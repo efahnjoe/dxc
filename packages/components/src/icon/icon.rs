@@ -16,7 +16,7 @@ props! {
 
 /// Use icons from iconfont.
 ///
-/// see https://www.iconfont.cn/
+/// see [iconfont](https://www.iconfont.cn/)
 ///
 /// # Example
 /// ```
