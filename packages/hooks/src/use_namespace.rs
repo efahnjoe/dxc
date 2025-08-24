@@ -1,18 +1,19 @@
 use std::collections::HashMap;
+use dxc_types::namespace::Block;
 
-static DEFAULT_NAMESPACE: &'static str = "dxc";
-static STATE_PREFIX: &'static str = "is-";
+static DEFAULT_NAMESPACE: &str = "dxc";
+static STATE_PREFIX: &str = "is-";
 
-fn bem(namespace: &str, block: &str, block_suffix: &str, element: &str, modifier: &str) -> String {
+fn bem(namespace: String, block: Block, block_suffix: String, element: String, modifier: String) -> String {
     let mut cls = format! {"{}-{}", namespace ,block };
 
-    if block_suffix != "" {
+    if block_suffix != String::new() {
         cls = format! {"{}-{}", cls, block_suffix };
     }
-    if element != "" {
+    if element != String::new() {
         cls = format! {"{}__{}", cls, element };
     }
-    if modifier != "" {
+    if modifier != String::new() {
         cls = format! {"{}--{}", cls, modifier };
     }
     return cls;
@@ -20,63 +21,64 @@ fn bem(namespace: &str, block: &str, block_suffix: &str, element: &str, modifier
 
 // pub const NAMESPACE_CONTEXT_KEY: &str = "namespaceContextKey";
 
-pub fn use_get_derived_namespace(namespace_overrides: Option<&str>) -> &str {
+pub fn use_get_derived_namespace(namespace_overrides: Option<String>) -> String {
     match namespace_overrides {
         Some(namespace) => namespace,
-        None => DEFAULT_NAMESPACE,
+        _ => String::from(DEFAULT_NAMESPACE),
     }
 }
 
-pub struct UseNamespace<'a> {
-    block: &'a str,
-    namespace_overrides: Option<&'a str>,
+#[derive(Clone, Debug)]
+pub struct UseNamespace {
+    block: Block,
+    namespace_overrides: Option<String>,
 }
 
-impl<'a> UseNamespace<'a> {
-    pub fn new(block: &'a str, namespace_overrides: Option<&'a str>) -> Self {
+impl UseNamespace {
+    pub fn new(block: Block, namespace_overrides: Option<String>) -> Self {
         UseNamespace {
             block,
             namespace_overrides,
         }
     }
 
-    pub fn namespace(&self) -> &str {
-        use_get_derived_namespace(self.namespace_overrides.as_deref())
+    pub fn namespace(&self) -> String {
+        use_get_derived_namespace(self.namespace_overrides.clone())
     }
 
     pub fn b(&self) -> String {
-        bem(self.namespace(), self.block, "", "", "")
+        bem(self.namespace(), self.block, String::new(), String::new(), String::new())
     }
 
-    pub fn b_(&self, block_suffix: &str) -> String {
-        bem(self.namespace(), self.block, block_suffix, "", "")
+    pub fn b_(&self, block_suffix: String) -> String {
+        bem(self.namespace(), self.block, block_suffix, String::new(), String::new())
     }
 
-    pub fn e_(&self, element: &str) -> String {
-        bem(self.namespace(), self.block, "", element, "")
+    pub fn e_(&self, element: String) -> String {
+        bem(self.namespace(), self.block, String::new(), element, String::new())
     }
 
-    pub fn m_(&self, modifier: &str) -> String {
-        if modifier == "" {
+    pub fn m_(&self, modifier: String) -> String {
+        if modifier == String::new() {
             String::new()
         } else {
-            bem(self.namespace(), self.block, "", "", modifier)
+            bem(self.namespace(), self.block, String::new(), String::new(), modifier)
         }
     }
 
-    pub fn be_(&self, block_suffix: &str, element: &str) -> String {
-        bem(self.namespace(), self.block, block_suffix, element, "")
+    pub fn be_(&self, block_suffix: String, element: String) -> String {
+        bem(self.namespace(), self.block, block_suffix, element, String::new())
     }
 
-    pub fn em_(&self, element: &str, modifier: &str) -> String {
-        bem(self.namespace(), self.block, "", element, modifier)
+    pub fn em_(&self, element: String, modifier: String) -> String {
+        bem(self.namespace(), self.block, String::new(), element, modifier)
     }
 
-    pub fn bm_(&self, block_suffix: &str, modifier: &str) -> String {
-        bem(self.namespace(), self.block, block_suffix, "", modifier)
+    pub fn bm_(&self, block_suffix: String, modifier: String) -> String {
+        bem(self.namespace(), self.block, block_suffix, String::new(), modifier)
     }
 
-    pub fn bem_(&self, block_suffix: &str, element: &str, modifier: &str) -> String {
+    pub fn bem_(&self, block_suffix: String, element: String, modifier: String) -> String {
         bem(
             self.namespace(),
             self.block,
@@ -86,7 +88,7 @@ impl<'a> UseNamespace<'a> {
         )
     }
 
-    pub fn is_(&self, name: &str, state: Option<bool>) -> String {
+    pub fn is_(&self, name: String, state: Option<bool>) -> String {
         match state {
             Some(true) => format!("{}{}", STATE_PREFIX, name),
             Some(false) => String::new(),
@@ -94,17 +96,17 @@ impl<'a> UseNamespace<'a> {
         }
     }
 
-    pub fn css_var(&self, object: &HashMap<&str, &str>) -> HashMap<String, String> {
+    pub fn css_var(&self, object: &HashMap<String, String>) -> HashMap<String, String> {
         object
             .iter()
-            .map(|(&key, &value)| {
+            .map(|(key, value)| {
                 let css_var_name = format!("--{}-{}", self.namespace(), key);
                 (css_var_name, value.to_string())
             })
             .collect()
     }
 
-    pub fn css_var_block(&self, object: HashMap<&str, &str>) -> String {
+    pub fn css_var_block(&self, object: HashMap<String, String>) -> String {
         object
             .iter()
             .map(|(key, value)| {
@@ -114,11 +116,11 @@ impl<'a> UseNamespace<'a> {
             .join(" ")
     }
 
-    pub fn css_var_name(&self, name: &str) -> String {
+    pub fn css_var_name(&self, name: String) -> String {
         format!("--{}-{}", self.namespace(), name)
     }
 
-    pub fn css_var_block_name(&self, name: &str) -> String {
+    pub fn css_var_block_name(&self, name: String) -> String {
         format!("--{}-{}-{}", self.namespace(), self.block, name)
     }
 }
