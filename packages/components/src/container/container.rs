@@ -1,15 +1,8 @@
 use dioxus::prelude::*;
 use dxc_hooks::UseNamespace;
-
-#[derive(Clone, Props, PartialEq)]
-pub struct ContainerProps {
-    #[props(default)]
-    direction: Option<String>,
-    #[props(default)]
-    class: Option<String>,
-    #[props(default)]
-    children: Option<Element>,
-}
+use dxc_macros::classes;
+use super::props::ContainerProps;
+use dxc_types::{Direction,namespace::Block};
 
 /// A generic container component for grouping and styling content.
 ///
@@ -22,12 +15,12 @@ pub struct ContainerProps {
 ///
 /// - `direction`: A hint for the preferred arrangement of children.
 ///   Values: `"horizontal"` (default) or `"vertical"`.
-/// 
+///
 ///   When nested with `DxcHeader` or `DxcFooter`, Plese use `vertically`. Otherwise use `horizontally`.
-/// 
+///
 /// - `class`: Additional CSS classes to apply to the container element.
 ///   Default: `"container"`.
-/// 
+///
 /// - `children`: The content to be rendered inside the container.
 ///
 /// # Example
@@ -57,27 +50,24 @@ pub struct ContainerProps {
 ///   to apply different styles, but it does not alter layout by default.
 /// - Combine with CSS for full styling control.
 #[component]
-pub fn DxcContainer(
-    props: ContainerProps
-) -> Element {
-    let ContainerProps { 
-        direction, 
-        class, 
-        children 
-    } = props;
-
-    let is_vertical = match direction.as_deref().unwrap_or("horizontal") {
-        "vertical" => true,
-        "horizontal" => false,
-        _ => false,
+pub fn DxcContainer(props: ContainerProps) -> Element {
+    let is_vertical = match props.direction() {
+        Direction::Vertical => true,
+        Direction::Horizontal => false,
     };
 
-    let ns = UseNamespace::new("container", None);
+    let ns = UseNamespace::new(Block::Container, None);
+
+    let classes = classes!{
+        ns.b(),
+        ns.is_(Direction::Vertical.to_string(), Some(is_vertical)),
+        props.class()
+    };
 
     rsx! {
         section {
-            class: format!("{} {} {}", ns.b(), ns.is_("vertical", Some(is_vertical)), class.unwrap_or_default()),
-            {children}
+            class: classes,
+            {props.children}
         }
     }
 }
