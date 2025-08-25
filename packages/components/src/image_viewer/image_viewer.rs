@@ -11,6 +11,7 @@ use dxc_icons::{
     ArrowLeft, ArrowRight, Close, FullScreen, RefreshLeft, RefreshRight, ScaleToOriginal, ZoomIn,
     ZoomOut,
 };
+use dxc_types::namespace::Block;
 use dxc_macros::classes;
 
 #[component]
@@ -36,26 +37,21 @@ pub fn DxcImageViewer(props: ImageViewerProps) -> Element {
     let is_first = use_signal(|| active_index() == 0);
     let is_last = use_signal(|| active_index() == url_list().len().saturating_sub(1));
 
-    // let current_img = use_signal(|| {
-    //     let active_index = active_index();
-    //     return url_list().get(active_index).cloned();
-    // });
-
     let show_progress = use_signal(|| props.show_progress());
     let progress = use_memo(move || format!("{} / {}", active_index() + 1, url_list.len()));
 
     // style
-    let ns = UseNamespace::new("image-viewer", None);
+    let ns = UseNamespace::new(Block::ImageViewer, None);
 
     let arrow_pre_classes = classes! {
-        ns.e_("btn"),
-        ns.e_("prev"),
-        ns.is_("disabled", Some(!infinite() && is_first())),
+        ns.e_(String::from("btn")),
+        ns.e_(String::from("prev")),
+        ns.is_(String::from("disabled"), Some(!infinite() && is_first())),
     };
     let arrow_next_classes = classes! {
-        ns.e_("btn"),
-        ns.e_("next"),
-        ns.is_("disabled", Some(!infinite() && is_last())),
+        ns.e_(String::from("btn")),
+        ns.e_(String::from("next")),
+        ns.is_(String::from("disabled"), Some(!infinite() && is_last())),
     };
     let img_style = use_memo(move || {
         let t = transform();
@@ -187,12 +183,12 @@ pub fn DxcImageViewer(props: ImageViewerProps) -> Element {
                 div {
                     tabindex: "-1",
                     z_index: z_index(),
-                    class: ns.e_("wrapper"),
+                    class: ns.e_(String::from("wrapper")),
                     DxcFocusTrap{
                         loop_: true,
                         trapped: true,
                         div {
-                            class: ns.e_("mask"),
+                            class: ns.e_(String::from("mask")),
                             onclick: move |evt| {
                                 if hide_on_click_modal() {
                                     hide(evt)
@@ -202,7 +198,7 @@ pub fn DxcImageViewer(props: ImageViewerProps) -> Element {
 
                         //close
                         span {
-                            class: format!("{} {}",ns.e_("btn"),ns.e_("close")),
+                            class: format!("{} {}",ns.e_(String::from("btn")),ns.e_(String::from("close"))),
                             onclick: move |evt| {
                                 hide(evt)
                             },
@@ -225,7 +221,7 @@ pub fn DxcImageViewer(props: ImageViewerProps) -> Element {
 
                         if slot_progress.is_some() || show_progress(){
                             div {
-                                class: format!("{} {}", ns.e_("btn"), ns.e_("progress")),
+                                class: format!("{} {}", ns.e_(String::from("btn")), ns.e_(String::from("progress"))),
                                 {slot_progress}
                                 {progress()}
                             }
@@ -233,10 +229,10 @@ pub fn DxcImageViewer(props: ImageViewerProps) -> Element {
 
                         // actions
                         div {
-                            class: format!("{} {}", ns.e_("btn"), ns.e_("actions")),
+                            class: format!("{} {}", ns.e_(String::from("btn")), ns.e_(String::from("actions"))),
 
                             div {
-                                class: ns.e_("actions__inner"),
+                                class: ns.e_(String::from("actions__inner")),
                                 {slot_toolbar}
 
                                 DxcIcon {
@@ -247,7 +243,7 @@ pub fn DxcImageViewer(props: ImageViewerProps) -> Element {
                                     onclick: move |_| handle_actions(Action::ZoomIn),
                                     ZoomIn {  }
                                 }
-                                i { class:ns.e_("actions__divider") }
+                                i { class:ns.e_(String::from("actions__divider")) }
                                 DxcIcon {
                                     onclick: move |_| toogle_mode(),
                                     if toggle_mode_icon() {
@@ -256,7 +252,7 @@ pub fn DxcImageViewer(props: ImageViewerProps) -> Element {
                                         FullScreen {  }
                                     }
                                 }
-                                i { class:ns.e_("actions__divider") }
+                                i { class:ns.e_(String::from("actions__divider")) }
                                 DxcIcon {
                                     onclick: move |_| handle_actions(Action::Anticlockwise),
                                     RefreshLeft {  }
@@ -270,13 +266,13 @@ pub fn DxcImageViewer(props: ImageViewerProps) -> Element {
 
                         // canvas
                         div {
-                            class:ns.e_("canvas"),
+                            class:ns.e_(String::from("canvas")),
                             for (index, item) in url_list().iter().enumerate() {
                                 if index == current_index() {
                                     img {
                                         key: {index},
                                         src: "{item}",
-                                        class: ns.e_("img"),
+                                        class: ns.e_(String::from("img")),
                                         style: img_style,
                                         crossorigin: crossorigin(),
                                         onload: move |_| {
