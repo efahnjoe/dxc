@@ -1,0 +1,18 @@
+version = { workspace = true }
+confirm = true
+push = true
+push-tags = true
+sign = false
+tag-message = "v{{version}}"
+commit-message = "release: v{{version}}"
+changelog = { file = "CHANGELOG.md", emit = ["workspace"] }
+publish = true
+allow-dirty = false
+
+[env]
+CARGO_REGISTRY_TOKEN = { required = true }
+
+[pre-release-hook]
+command = "cargo"
+args = ["test", "--workspace", "--locked"]
+workspace = true
