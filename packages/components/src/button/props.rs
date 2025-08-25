@@ -36,3 +36,20 @@ props! {
     },
     derive(PropsDefault)
 }
+
+props! {
+    ButtonGroupProps {
+        #[props_default(value = Size::Default)]
+        size: Size,
+
+        #[props_default(value = ButtonType::Primary)]
+        type_: ButtonType,
+
+
+        class: String,
+
+        #[props_default(skip)]
+        children: Element,
+    },
+    derive(PropsDefault)
+}

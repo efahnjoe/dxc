@@ -16,7 +16,7 @@ mod teleport;
 mod transition;
 
 pub use aside::DxcAside;
-pub use button::DxcButton;
+pub use button::{DxcButton, DxcButtonGroup};
 pub use container::DxcContainer;
 pub use footer::DxcFooter;
 pub use header::DxcHeader;
