@@ -1,4 +1,5 @@
 pub mod namespace;
+pub mod types;
 
 mod crossorigin;
 mod direction;
