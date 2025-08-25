@@ -1,13 +1,16 @@
 use dioxus::prelude::*;
 use dxc_macros::{props, PropsDefault};
-use dxc_types::Size;
+use dxc_types::{types::ButtonType, Size};
 
 props! {
     ButtonProps {
         #[props_default(value = Size::Default)]
         size: Size,
         disabled: bool,
-        type_: String,
+        
+        #[props_default(value = ButtonType::Primary)]
+        type_: ButtonType,
+
         icon: String,
         navtive_type: String,
         loading: bool,
