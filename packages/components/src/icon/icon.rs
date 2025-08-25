@@ -1,18 +1,9 @@
+use super::props::IconProps;
 use dioxus::prelude::*;
 use dxc_hooks::UseNamespace;
 use dxc_icons::spawn_icon;
-use dxc_macros::{classes, props};
-
-props! {
-    IconProps {
-        id: String,
-        class: String,
-        style: String,
-        icon: String,
-        onclick: EventHandler<MouseEvent>,
-        children: Element,
-    }
-}
+use dxc_macros::classes;
+use dxc_types::namespace::Block;
 
 /// Use icons from iconfont.
 ///
@@ -30,16 +21,25 @@ props! {
 /// ```
 #[component]
 pub fn DxcIcon(props: IconProps) -> Element {
-    let ns = UseNamespace::new("icon", None);
-    let classes = classes!{ns.b(), props.class.as_deref().unwrap_or("")};
+    let id = use_signal(|| props.id());
+
+    let ns = UseNamespace::new(Block::Icon, None);
+
+    let classes = classes! {ns.b(), props.class()};
+
+    let style = use_signal(|| props.style());
 
     rsx! {
       i {
-        id: props.id.as_deref(),
+        id: id(),
         class: classes,
-        style: props.style,
-        onclick: props.onclick.clone().unwrap_or_default(),
-        
+        style: style(),
+        onclick: move |evt| {
+            if let Some(onclick) = props.onclick.as_ref() {
+                onclick.call(evt);
+            }
+        },
+
         match props.icon {
           Some(icon) => {
             spawn_icon(&icon)
