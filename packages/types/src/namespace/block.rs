@@ -63,6 +63,10 @@ pub enum Block {
     #[strum(serialize = "teleport")]
     Teleport,
 
+    #[serde(rename = "textarea")]
+    #[strum(serialize = "textarea")]
+    Textarea,
+
     #[serde(rename = "transition")]
     #[strum(serialize = "transition")]
     Transition,
