@@ -1,92 +1,28 @@
+use super::props::InputProps;
 use crate::DxcIcon;
 use dioxus::prelude::*;
 use dxc_hooks::UseNamespace;
 use dxc_icons::{spawn_icon, CircleClose, Hide, View};
-use dxc_macros::{classes, props};
-
-props! {
-    InputProps {
-        id: String,
-        type_: String,
-        size: String,
-        disabled: bool,
-        exceed: bool,
-        value: Signal<String>,
-        minlength: usize,
-        max_length: usize,
-        resize: String,
-        auto_size: String,
-        auto_complete: String,
-        formatter: fn(),
-        parser: fn(),
-        placeholder: String,
-        read_only: bool,
-        clearable: bool,
-        show_password:bool,
-        show_word_limit: bool,
-        container_role: String,
-        tab_index: usize,
-        validate_event: bool,
-        input_style: String,
-        rows: usize,
-        inputmode: String,
-        name: String,
-
-        // events
-        onfocus: EventHandler<FocusEvent>,
-        onblur: EventHandler<FocusEvent>,
-        onchange: EventHandler<FormEvent>,
-        oninput: EventHandler<FormEvent>,
-        onkeydown: EventHandler<KeyboardEvent>,
-
-        // native
-        aria_label: String,
-        form: String,
-        autofocus: bool,
-
-        // Slots
-        append: Element,
-        prepend: Element,
-        prefix: Element,
-        suffix: Element,
-        prefix_icon: String,
-        suffix_icon: String,
-
-        // Default Props
-        class: String,
-        style: String,
-        children: Element,
-    }
-}
+use dxc_macros::classes;
+use dxc_types::namespace::Block;
 
 #[component]
 pub fn DxcInput(props: InputProps) -> Element {
     // State
-    let input_id = props.id.clone();
+    let input_id = use_signal(|| props.id());
     let input_type = props.type_.clone().unwrap_or("text".to_string());
-    let input_resize = match props.resize.as_deref() {
-        Some("none") => String::from("none"),
-        Some("both") => String::from("both"),
-        Some("horizontal") => String::from("horizontal"),
-        Some("vertical") => String::from("vertical"),
-        _ => String::from("none"),
-    };
-    let input_size = match props.size.as_deref() {
-        Some("default") => String::from("default"),
-        Some("small") => String::from("small"),
-        Some("large") => String::from("large"),
-        _ => String::from("default"),
-    };
+    let input_resize = use_signal(|| props.resize().to_string());
+    let input_size = use_signal(|| props.size().to_string());
 
-    let mut input_value = props.value.unwrap_or(Signal::new(String::new()));
-    let input_disable = use_signal(|| props.disabled.unwrap_or(false));
+    let mut input_value = props.value();
+    let input_disable = use_signal(|| props.disabled());
 
-    let clearable = use_signal(|| props.clearable.unwrap_or(false));
-    let read_only = use_signal(|| props.read_only.unwrap_or(false));
-    let show_word_limit = use_signal(|| props.show_word_limit.unwrap_or(false));
-    let show_password = use_signal(|| props.show_password.unwrap_or(false));
+    let clearable = use_signal(|| props.clearable());
+    let read_only = use_signal(|| props.read_only());
+    let show_word_limit = use_signal(|| props.show_word_limit());
+    let show_password = use_signal(|| props.show_password());
 
-    let validate_state = use_signal(|| Some(String::new()));
+    let validate_state = use_signal(|| String::new());
 
     let need_status_icon = use_signal(|| false);
 
@@ -95,12 +31,9 @@ pub fn DxcInput(props: InputProps) -> Element {
     let mut hovering = use_signal(|| false);
     let mut password_visible = use_signal(|| false);
 
-    let show_clear = use_memo(move|| {
-        clearable()
-            && !input_disable()
-            && !read_only()
-            && !input_value().is_empty()
-            // && (is_focused() || hovering())
+    let show_clear = use_memo(move || {
+        clearable() && !input_disable() && !read_only() && !input_value().is_empty()
+        // && (is_focused() || hovering())
     });
 
     let show_pwd_visible =
@@ -118,7 +51,7 @@ pub fn DxcInput(props: InputProps) -> Element {
     let text_length = use_signal(move || input_value().chars().count());
     let input_exceed =
         use_signal(|| !!is_word_limit_visible() && (text_length() > props.max_length.unwrap_or(0)));
-    
+
     let is_suffix = props.suffix.is_some();
 
     let suffix_visible = use_memo(move || {
@@ -127,32 +60,32 @@ pub fn DxcInput(props: InputProps) -> Element {
             || show_clear()
             || show_password()
             || is_word_limit_visible()
-            || (validate_state().is_some() && need_status_icon())
+            || (validate_state().is_empty() && need_status_icon())
     });
 
     // Styles
-    let ns_textarea = UseNamespace::new("textarea", None);
-    let ns_input = UseNamespace::new("input", None);
+    let ns_textarea = UseNamespace::new(Block::Textarea, None);
+    let ns_input = UseNamespace::new(Block::Input, None);
 
     let container_classes = classes! {
         if props.type_ == Some("textarea".to_string()) {&ns_textarea.b()} else {&ns_input.b();},
-        &ns_input.m_(input_size.as_ref()),
-        &ns_input.is_("disabled", Some(input_disable())),
-        &ns_input.is_("exceed", Some(input_exceed())),
+        &ns_input.m_(input_size()),
+        &ns_input.is_(String::from("disabled"), Some(input_disable())),
+        &ns_input.is_(String::from("exceed"), Some(input_exceed())),
 
-        if props.append.is_some() || props.prepend.is_some() {&ns_input.b_("group")},
-        if props.prepend.is_some() || props.prefix.is_some() {&ns_input.m_("prefix")},
-        if props.suffix.is_some() || props.suffix.is_some() || clearable() || show_password() {&ns_input.m_("suffix")},
-        if show_clear() && show_pwd_visible() {&ns_input.bm_("suffix","password-clear")},
+        if props.append.is_some() || props.prepend.is_some() {&ns_input.b_(String::from("group"))},
+        if props.prepend.is_some() || props.prefix.is_some() {&ns_input.m_(String::from("prefix"))},
+        if props.suffix.is_some() || props.suffix.is_some() || clearable() || show_password() {&ns_input.m_(String::from("suffix"))},
+        if show_clear() && show_pwd_visible() {&ns_input.bm_(String::from("suffix"),String::from("password-clear"))},
 
-        if props.append.is_some() { &ns_input.bm_("group", "append") },
-        if props.prepend.is_some() { &ns_input.bm_("group", "prepend") },
+        if props.append.is_some() { &ns_input.bm_(String::from("group"), String::from("append")) },
+        if props.prepend.is_some() { &ns_input.bm_(String::from("group"), String::from("prepend")) },
 
         &props.class.as_deref().unwrap_or(""),
     };
     let wrapper_classes = classes! {
-        ns_input.e_("wrapper"),
-        ns_input.is_("focus", Some(is_focused()))
+        ns_input.e_(String::from("wrapper")),
+        ns_input.is_(String::from("focus"), Some(is_focused()))
     };
 
     let textarea_calc_style = format!("");
@@ -160,7 +93,7 @@ pub fn DxcInput(props: InputProps) -> Element {
         "{} {} {}",
         props.input_style.unwrap_or(String::new()),
         textarea_calc_style,
-        props.resize.unwrap_or(String::new())
+        input_resize()
     );
 
     rsx! {
@@ -172,7 +105,7 @@ pub fn DxcInput(props: InputProps) -> Element {
 
                 if props.prepend.is_some() {
                     div {
-                        class:ns_input.be_("group", "prepend"),
+                        class:ns_input.be_(String::from("group"), String::from("prepend")),
                         {props.prepend}
                     }
                 }
@@ -181,9 +114,9 @@ pub fn DxcInput(props: InputProps) -> Element {
                     // prefix slot
                     if props.prefix.is_some() || props.prefix_icon.is_some() {
                         span {
-                            class: ns_input.e_("prefix"),
+                            class: ns_input.e_(String::from("prefix")),
                             span {
-                                class: ns_input.e_("prefix-inner"),
+                                class: ns_input.e_(String::from("prefix-inner")),
                                 {props.prefix}
                                 DxcIcon {
                                     children: spawn_icon(props.prefix_icon.as_deref().unwrap_or("")),
@@ -193,7 +126,7 @@ pub fn DxcInput(props: InputProps) -> Element {
                     }
 
                     input {
-                        class: ns_input.e_("inner"),
+                        class: ns_input.e_(String::from("inner")),
                         name: props.name,
                         minlength: props.minlength,
                         maxlength: props.max_length,
@@ -235,21 +168,21 @@ pub fn DxcInput(props: InputProps) -> Element {
                     // suffix slot
                     if suffix_visible() || props.suffix_icon.is_some() {
                         span {
-                            class: ns_input.e_("suffix"),
+                            class: ns_input.e_(String::from("suffix")),
                             span {
-                                class: ns_input.e_("suffix-inner"),
+                                class: ns_input.e_(String::from("suffix-inner")),
 
                                 if !show_clear() || !show_pwd_visible() || !is_word_limit_visible() {
                                     {props.suffix}
                                     DxcIcon {
-                                        class: ns_input.e_("icon"),
+                                        class: ns_input.e_(String::from("icon")),
                                         children: spawn_icon(props.suffix_icon.as_deref().unwrap_or(""))
                                     }
                                 }
 
                                 if show_clear() {
                                     DxcIcon {
-                                        class: format!("{} {}", ns_input.e_("icon"), ns_input.e_("clear")),
+                                        class: format!("{} {}", ns_input.e_(String::from("icon")), ns_input.e_(String::from("clear"))),
                                         onclick: move |event:MouseEvent| {
                                             event.prevent_default();
                                             input_value.set(String::new());
@@ -260,7 +193,7 @@ pub fn DxcInput(props: InputProps) -> Element {
 
                                 if show_pwd_visible() {
                                     DxcIcon {
-                                        class: format!("{} {}", ns_input.e_("icon"),ns_input.e_("password")),
+                                        class: format!("{} {}", ns_input.e_(String::from("icon")),ns_input.e_(String::from("password"))),
                                         onclick: move |_| {
                                             password_visible.set(!password_visible());
                                         },
@@ -279,7 +212,7 @@ pub fn DxcInput(props: InputProps) -> Element {
                 // append slot
                 if props.append.is_some(){
                     div {
-                        class: ns_input.be_("group", "append"),
+                        class: ns_input.be_(String::from("group"), String::from("append")),
                         {props.append}
                     }
                 }
@@ -287,7 +220,7 @@ pub fn DxcInput(props: InputProps) -> Element {
 
                 div {
                     textarea {
-
+                        style: textarea_style,
                     }
                 }
             }
