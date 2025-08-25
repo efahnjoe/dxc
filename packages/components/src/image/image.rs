@@ -3,7 +3,7 @@ use crate::image_viewer::DxcImageViewer;
 use dioxus::prelude::*;
 use dxc_hooks::UseNamespace;
 use dxc_macros::classes;
-use dxc_types::Loading;
+use dxc_types::{Loading,namespace::Block};
 
 #[component]
 pub fn DxcImage(props: ImageProps) -> Element {
@@ -60,12 +60,12 @@ pub fn DxcImage(props: ImageProps) -> Element {
     //     }
     // });
 
-    let ns = UseNamespace::new("image", None);
+    let ns = UseNamespace::new(Block::Image, None);
 
     let image_classes = classes! {
-        ns.e_("inner"),
-        if preview() { &ns.e_("preview") },
-        if is_loading() { &ns.e_("loading") },
+        ns.e_(String::from("inner")),
+        if preview() { &ns.e_(String::from("preview")) },
+        if is_loading() { &ns.e_(String::from("loading")) },
     };
 
     let image_style = format!("object-fit: {};", fit());
@@ -80,7 +80,7 @@ pub fn DxcImage(props: ImageProps) -> Element {
                 div {
                     "name": "image_error",
                     div {
-                        class: ns.e_("error"),
+                        class: ns.e_(String::from("error")),
                         "FAILED"
                     }
                     {props.error}
@@ -117,9 +117,9 @@ pub fn DxcImage(props: ImageProps) -> Element {
 
                     if is_loading() {
                         div {
-                            class: ns.e_("wrapper"),
+                            class: ns.e_(String::from("wrapper")),
                             div {
-                                class: ns.e_("placeholder"),
+                                class: ns.e_(String::from("placeholder")),
                                 {props.placeholder}
                             }
                         }
