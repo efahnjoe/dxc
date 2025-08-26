@@ -1,8 +1,8 @@
+use super::props::ContainerProps;
 use dioxus::prelude::*;
 use dxc_hooks::UseNamespace;
 use dxc_macros::classes;
-use super::props::ContainerProps;
-use dxc_types::{Direction,namespace::Block};
+use dxc_types::{components::container::Direction, namespace::Block};
 
 /// A generic container component for grouping and styling content.
 ///
@@ -32,7 +32,7 @@ use dxc_types::{Direction,namespace::Block};
 /// fn app() -> Element {
 ///     rsx! {
 ///         DxcContainer {
-///             direction: "vertical".to_string(),
+///             direction: Container::Direction::Horizontal,
 ///             class: "my-container padded bordered".to_string(),
 ///             {
 ///                 h1 { "Welcome" }
@@ -51,22 +51,25 @@ use dxc_types::{Direction,namespace::Block};
 /// - Combine with CSS for full styling control.
 #[component]
 pub fn DxcContainer(props: ContainerProps) -> Element {
-    let is_vertical = match props.direction() {
+    let is_vertical = use_signal(|| match props.direction() {
         Direction::Vertical => true,
         Direction::Horizontal => false,
-    };
+    });
 
     let ns = UseNamespace::new(Block::Container, None);
 
-    let classes = classes!{
+    let classes = classes! {
         ns.b(),
-        ns.is_(Direction::Vertical.to_string(), Some(is_vertical)),
+        ns.is_(Direction::Vertical.to_string(), Some(is_vertical())),
         props.class()
     };
+
+    let style = use_signal(|| props.style());
 
     rsx! {
         section {
             class: classes,
+            style: style(),
             {props.children}
         }
     }
