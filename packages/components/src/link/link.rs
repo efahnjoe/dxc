@@ -2,7 +2,7 @@ use super::props::LinkProps;
 use dioxus::prelude::*;
 use dxc_hooks::UseNamespace;
 use dxc_macros::classes;
-use dxc_types::namespace::Block;
+use dxc_types::{namespace::Block, components::link::*};
 
 #[component]
 pub fn DxcLink(props: LinkProps) -> Element {
@@ -18,8 +18,8 @@ pub fn DxcLink(props: LinkProps) -> Element {
         ns.b(),
         ns.m_(link_type()),
         ns.is_(String::from("disabled"), Some(disabled())),
-        ns.is_(String::from("underline"), Some(underline_mode() == String::from("always"))),
-        ns.is_(String::from("hover-underline"), Some(underline_mode() == String::from("hover") && !disabled())),
+        ns.is_(String::from("underline"), Some(underline_mode() == Underline::Always)),
+        ns.is_(String::from("hover-underline"), Some(underline_mode() == Underline::Hover && !disabled())),
     };
 
     rsx! {

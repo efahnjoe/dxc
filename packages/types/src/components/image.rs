@@ -3,6 +3,8 @@ use dioxus::prelude::IntoAttributeValue;
 use serde::{Deserialize, Serialize};
 use strum::{Display, EnumString};
 
+pub use crate::common::crossorigin::Crossorigin;
+
 #[derive(Clone, Copy, Debug, PartialEq, Serialize, Deserialize, Display, EnumString)]
 #[strum(serialize_all = "kebab-case")]
 pub enum Fit {
@@ -27,7 +29,24 @@ pub enum Fit {
     ScaleDown,
 }
 
+#[derive(Clone, Copy, Debug, PartialEq, Serialize, Deserialize, Display, EnumString)]
+#[strum(serialize_all = "kebab-case")]
+pub enum Loading {
+    #[serde(rename = "eager")]
+    #[strum(serialize = "eager")]
+    Eager,
+    #[serde(rename = "lazy")]
+    #[strum(serialize = "lazy")]
+    Lazy,
+}
+
 impl IntoAttributeValue for Fit {
+    fn into_value(self) -> AttributeValue {
+        AttributeValue::Text(self.to_string())
+    }
+}
+
+impl IntoAttributeValue for Loading {
     fn into_value(self) -> AttributeValue {
         AttributeValue::Text(self.to_string())
     }

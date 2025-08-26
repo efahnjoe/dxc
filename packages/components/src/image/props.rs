@@ -1,6 +1,6 @@
 use dioxus::prelude::*;
 use dxc_macros::{props, PropsDefault};
-use dxc_types::{Crossorigin, Fit, Loading};
+use dxc_types::components::image::{Crossorigin, Fit, Loading};
 
 props! {
     ImageProps {

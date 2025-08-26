@@ -1,6 +1,6 @@
 use dioxus::prelude::*;
 use dxc_macros::{props, PropsDefault};
-use dxc_types::Crossorigin;
+use dxc_types::components::image_view::Crossorigin;
 
 props! {
     ImageViewerProps {

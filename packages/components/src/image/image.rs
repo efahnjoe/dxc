@@ -3,7 +3,7 @@ use crate::image_viewer::DxcImageViewer;
 use dioxus::prelude::*;
 use dxc_hooks::UseNamespace;
 use dxc_macros::classes;
-use dxc_types::{Loading,namespace::Block};
+use dxc_types::{components::image::Loading, namespace::Block};
 
 #[component]
 pub fn DxcImage(props: ImageProps) -> Element {
