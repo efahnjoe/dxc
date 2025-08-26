@@ -1,11 +1,8 @@
-use dioxus::dioxus_core::AttributeValue;
-use dioxus::prelude::IntoAttributeValue;
 use serde::{Deserialize, Serialize};
 use strum::{Display, EnumString};
 
 #[derive(Clone, Copy, Debug, PartialEq, Serialize, Deserialize, Display, EnumString)]
-#[strum(serialize_all = "kebab-case")]
-pub enum LinkType {
+pub enum Type {
     #[serde(rename = "primary")]
     #[strum(serialize = "primary")]
     Primary,
@@ -31,8 +28,25 @@ pub enum LinkType {
     Default,
 }
 
-impl IntoAttributeValue for LinkType {
-    fn into_value(self) -> AttributeValue {
-        AttributeValue::Text(self.to_string())
-    }
+#[derive(Clone, Copy, Debug, PartialEq, Serialize, Deserialize, Display, EnumString)]
+pub enum Underline {
+    #[serde(rename = "always")]
+    #[strum(serialize = "always")]
+    Always,
+
+    #[serde(rename = "never")]
+    #[strum(serialize = "never")]
+    Never,
+
+    #[serde(rename = "hover")]
+    #[strum(serialize = "hover")]
+    Hover,
+
+    #[serde(rename = "true")]
+    #[strum(serialize = "true")]
+    True,
+
+    #[serde(rename = "false")]
+    #[strum(serialize = "false")]
+    False,
 }

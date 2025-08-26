@@ -1,6 +1,6 @@
 use dioxus::prelude::*;
 use dxc_macros::{props, PropsDefault};
-use dxc_types::{types::ButtonType, Size};
+use dxc_types::components::button::*;
 
 props! {
     ButtonProps {
@@ -8,8 +8,8 @@ props! {
         size: Size,
         disabled: bool,
         
-        #[props_default(value = ButtonType::Primary)]
-        type_: ButtonType,
+        #[props_default(value = Type::Primary)]
+        type_: Type,
 
         icon: String,
         navtive_type: String,
@@ -42,8 +42,8 @@ props! {
         #[props_default(value = Size::Default)]
         size: Size,
 
-        #[props_default(value = ButtonType::Primary)]
-        type_: ButtonType,
+        #[props_default(value = Type::Primary)]
+        type_: Type,
 
 
         class: String,

@@ -1,6 +1,6 @@
 use dioxus::prelude::*;
 use dxc_macros::{props, PropsDefault};
-use dxc_types::{Resize, Size};
+use dxc_types::components::input::{Resize, Size};
 
 props! {
     InputProps {
@@ -17,6 +17,7 @@ props! {
 
         #[props_default(value = Resize::None)]
         resize: Resize,
+
         auto_size: String,
         auto_complete: String,
         formatter: EventHandler<()>,

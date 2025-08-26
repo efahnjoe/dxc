@@ -1,5 +1,3 @@
-use dioxus::dioxus_core::AttributeValue;
-use dioxus::prelude::IntoAttributeValue;
 use serde::{Deserialize, Serialize};
 use strum::{Display, EnumString};
 
@@ -23,8 +21,4 @@ pub enum Resize {
     Vertical,
 }
 
-impl IntoAttributeValue for Resize {
-    fn into_value(self) -> AttributeValue {
-        AttributeValue::Text(self.to_string())
-    }
-}
+pub use crate::common::size::Size;

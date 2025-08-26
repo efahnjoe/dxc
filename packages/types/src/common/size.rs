@@ -4,7 +4,6 @@ use serde::{Deserialize, Serialize};
 use strum::{Display, EnumString};
 
 #[derive(Clone, Copy, Debug, PartialEq, Serialize, Deserialize, Display, EnumString)]
-#[strum(serialize_all = "kebab-case")]
 pub enum Size {
     #[serde(rename = "large")]
     #[strum(serialize = "large")]

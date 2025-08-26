@@ -1,15 +1,16 @@
 use dioxus::prelude::*;
 use dxc_macros::{props, PropsDefault};
-use dxc_types::types::LinkType;
+use dxc_types::components::link::{Type,Underline};
 
 props! {
     LinkProps {
-        #[props_default(value = LinkType::Default)]
-        type_: LinkType,
+        #[props_default(value = Type::Default)]
+        type_: Type,
 
         disabled: bool,
 
-        underline: String,
+        #[props_default(value = Underline::Hover)]
+        underline: Underline,
 
         href: String,
 

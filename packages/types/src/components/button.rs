@@ -1,11 +1,8 @@
-use dioxus::dioxus_core::AttributeValue;
-use dioxus::prelude::IntoAttributeValue;
 use serde::{Deserialize, Serialize};
 use strum::{Display, EnumString};
 
 #[derive(Clone, Copy, Debug, PartialEq, Serialize, Deserialize, Display, EnumString)]
-#[strum(serialize_all = "kebab-case")]
-pub enum ButtonType {
+pub enum Type {
     #[serde(rename = "primary")]
     #[strum(serialize = "primary")]
     Primary,
@@ -27,8 +24,4 @@ pub enum ButtonType {
     Info,
 }
 
-impl IntoAttributeValue for ButtonType {
-    fn into_value(self) -> AttributeValue {
-        AttributeValue::Text(self.to_string())
-    }
-}
+pub use crate::common::size::Size;
