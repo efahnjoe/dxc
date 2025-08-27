@@ -13,7 +13,6 @@
 #   make patch         # Bump patch version: 0.1.0 → 0.1.1
 #   make minor         # Bump minor version: 0.1.0 → 0.2.0
 #   make release       # Bump major version: 0.1.0 → 1.0.0
-#   make release-ci    # CI-friendly release (no confirmation)
 
 # -----------------------------------------------------------------------------
 # Variables (customize as needed)
@@ -61,48 +60,38 @@ clean: ## Remove all generated artifacts (target directory)
 	cargo clean
 
 .PHONY: patch
-patch: ## Bump patch version: 0.1.0 → 0.1.1, tag, update changelog (no push, no publish)
+patch: ## Bump patch version: 0.1.0 → 0.1.1 (auto commit/tag/changelog, no push/publish)
 	cargo release patch \
 		--workspace \
 		--no-publish \
 		--no-push \
 		--no-verify \
-		--no-confirm \
-		--pre-release-commit-message="chore: release v{{version}}" \
-		--tag-message="v{{version}}" \
-		--tag-prefix="v"
+		--no-confirm
 
 .PHONY: minor
-minor: ## Bump minor version: 0.1.0 → 0.2.0, tag, update changelog (no push, no publish)
+minor: ## Bump minor version: 0.1.0 → 0.2.0 (auto commit/tag/changelog, no push/publish)
 	cargo release minor \
 		--workspace \
 		--no-publish \
 		--no-push \
 		--no-verify \
-		--no-confirm \
-		--pre-release-commit-message="chore: release v{{version}}" \
-		--tag-message="v{{version}}" \
-		--tag-prefix="v"
+		--no-confirm
 
 .PHONY: major
-major: ## Bump major version: 0.1.0 → 1.0.0, tag, update changelog (no push, no publish)
+major: ## Bump major version: 0.1.0 → 1.0.0 (auto commit/tag/changelog, no push/publish)
 	cargo release major \
 		--workspace \
 		--no-publish \
 		--no-push \
 		--no-verify \
-		--no-confirm \
-		--pre-release-commit-message="chore: release v{{version}}" \
-		--tag-message="v{{version}}" \
-		--tag-prefix="v"
+		--no-confirm
 
 .PHONY: release
-release: ## Run interactive release
-	cargo release --workspace
-
-.PHONY: release-ci
-release-ci: ## CI-friendly release (no confirmation)
-	cargo release --workspace --no-confirm
+release: ## Run interactive release (full control, with confirmation)
+	cargo release --workspace \
+		--no-publish \
+		--no-push \
+		--verify
 
 # -----------------------------------------------------------------------------
 # Convenience Targets
