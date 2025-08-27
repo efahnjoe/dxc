@@ -20,7 +20,7 @@ pub fn app() -> Element {
             style: "width: 200px; height: 200px;",
             DxcImage {
                 src: "https://picsum.photos/400/250",
-                crossorigin:Crossorigin::Anonymous,
+                crossorigin: image::Crossorigin::Anonymous,
                 preview_src_list: img_list.clone(),
                 show_progress: true,
             }

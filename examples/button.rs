@@ -16,23 +16,23 @@ pub fn app() -> Element {
                     "Default"
                 },
                 DxcButton {
-                    type_: "primary",
+                    type_: button::Type::Primary,
                     "Primary"
                 },
                 DxcButton {
-                    type_: "success",
+                    type_: button::Type::Success,
                     "Seccess"
                 },
                 DxcButton {
-                    type_: "info",
+                    type_: button::Type::Info,
                     "Info"
                 },
                 DxcButton {
-                    type_: "warning",
+                    type_: button::Type::Warning,
                     "Warning"
                 },
                 DxcButton {
-                    type_: "danger",
+                    type_: button::Type::Danger,
                     "Danger"
                 },
             }
@@ -44,27 +44,27 @@ pub fn app() -> Element {
                 },
                 DxcButton {
                     plain: true,
-                    type_: "primary",
+                    type_: button::Type::Primary,
                     "Primary"
                 },
                 DxcButton {
                     plain: true,
-                    type_: "success",
+                    type_: button::Type::Success,
                     "Seccess"
                 },
                 DxcButton {
                     plain: true,
-                    type_: "info",
+                    type_: button::Type::Info,
                     "Info"
                 },
                 DxcButton {
                     plain: true,
-                    type_: "warning",
+                    type_: button::Type::Warning,
                     "Warning"
                 },
                 DxcButton {
                     plain: true,
-                    type_: "danger",
+                    type_: button::Type::Danger,
                     "Danger"
                 },
             }
@@ -76,27 +76,27 @@ pub fn app() -> Element {
                 },
                 DxcButton {
                     round: true,
-                    type_: "primary",
+                    type_: button::Type::Primary,
                     "Primary"
                 },
                 DxcButton {
                     round: true,
-                    type_: "success",
+                    type_: button::Type::Success,
                     "Seccess"
                 },
                 DxcButton {
                     round: true,
-                    type_: "info",
+                    type_: button::Type::Info,
                     "Info"
                 },
                 DxcButton {
                     round: true,
-                    type_: "warning",
+                    type_: button::Type::Warning,
                     "Warning"
                 },
                 DxcButton {
                     round: true,
-                    type_: "danger",
+                    type_: button::Type::Danger,
                     "Danger"
                 },
             }
@@ -107,27 +107,27 @@ pub fn app() -> Element {
                     circle: true,
                 },
                 DxcButton {
-                    type_: "primary",
+                    type_: button::Type::Primary,
                     icon: "Edit",
                     circle: true,
                 },
                 DxcButton {
-                    type_: "success",
+                    type_: button::Type::Success,
                     icon: "Check",
                     circle: true,
                 },
                 DxcButton {
-                    type_: "info",
+                    type_: button::Type::Info,
                     icon: "Message",
                     circle: true,
                 },
                 DxcButton {
-                    type_: "warning",
+                    type_: button::Type::Warning,
                     icon: "Star",
                     circle: true,
                 },
                 DxcButton {
-                    type_: "danger",
+                    type_: button::Type::Danger,
                     icon: "Delete",
                     circle: true,
                 },
@@ -142,27 +142,27 @@ pub fn app() -> Element {
                 },
                 DxcButton {
                     disabled: true,
-                    type_: "primary",
+                    type_: button::Type::Primary,
                     "Primary"
                 },
                 DxcButton {
                     disabled: true,
-                    type_: "success",
+                    type_: button::Type::Success,
                     "Seccess"
                 },
                 DxcButton {
                     disabled: true,
-                    type_: "info",
+                    type_: button::Type::Info,
                     "Info"
                 },
                 DxcButton {
                     disabled: true,
-                    type_: "warning",
+                    type_: button::Type::Warning,
                     "Warning"
                 },
                 DxcButton {
                     disabled: true,
-                    type_: "danger",
+                    type_: button::Type::Danger,
                     "Danger"
                 },
             }
@@ -176,31 +176,31 @@ pub fn app() -> Element {
                 DxcButton {
                     disabled: true,
                     plain: true,
-                    type_: "primary",
+                    type_: button::Type::Primary,
                     "Primary"
                 },
                 DxcButton {
                     disabled: true,
                     plain: true,
-                    type_: "success",
+                    type_: button::Type::Success,
                     "Seccess"
                 },
                 DxcButton {
                     disabled: true,
                     plain: true,
-                    type_: "info",
+                    type_: button::Type::Info,
                     "Info"
                 },
                 DxcButton {
                     disabled: true,
                     plain: true,
-                    type_: "warning",
+                    type_: button::Type::Warning,
                     "Warning"
                 },
                 DxcButton {
                     disabled: true,
                     plain: true,
-                    type_: "danger",
+                    type_: button::Type::Danger,
                     "Danger"
                 },
             }

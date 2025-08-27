@@ -12,7 +12,7 @@ pub fn LayoutAhmf() -> Element {
             width: "200px"
            }
            DxcContainer {
-            direction: "v",
+            direction: container::Direction::Vertical,
             DxcHeader {
 
              }
