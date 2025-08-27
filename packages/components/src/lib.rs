@@ -12,6 +12,7 @@ mod link;
 #[path = "main/mod.rs"]
 mod main;
 mod menu;
+mod menu_item;
 mod teleport;
 mod transition;
 
@@ -26,6 +27,7 @@ pub use image_viewer::DxcImageViewer;
 pub use input::DxcInput;
 pub use link::DxcLink;
 pub use main::DxcMain;
-pub use menu::{DxcMenu, DxcMenuItem};
+pub use menu::DxcMenu;
+pub use menu_item::DxcMenuItem;
 pub use teleport::DxcTeleport;
 pub use transition::DxcTransition;

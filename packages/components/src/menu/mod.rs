@@ -1,3 +1,3 @@
 mod menu;
 
-pub use menu::{DxcMenu, DxcMenuItem};
+pub use menu::DxcMenu;
