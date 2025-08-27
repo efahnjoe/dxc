@@ -10,6 +10,7 @@
 #   make test          # Run all tests
 #   make doc           # Generate documentation
 #   make clean         # Remove all generated artifacts
+#   make log           # Generate the CHANGELOG.md
 #   make patch         # Bump patch version: 0.1.0 → 0.1.1
 #   make minor         # Bump minor version: 0.1.0 → 0.2.0
 #   make release       # Bump major version: 0.1.0 → 1.0.0
@@ -58,6 +59,10 @@ doc: ## Generate documentation for private items, excluding dependencies
 .PHONY: clean
 clean: ## Remove all generated artifacts (target directory)
 	cargo clean
+
+.PHONY: log
+log: ## Generate the CHANGELOG.md
+	git-cliff -o CHANGELOG.md
 
 .PHONY: patch
 patch: ## Bump patch version: 0.1.0 → 0.1.1 (auto commit/tag/changelog, no push/publish)
