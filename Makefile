@@ -45,7 +45,7 @@ fmt: ## Format code using in-place  (for local development)
 	cargo fmt --all
 
 .PHONY: fmt-check
-fmt: ## Check if code is formatted (CI-friendly)
+fmt-check: ## Check if code is formatted (CI-friendly)
 	cargo fmt --all -- --check
 
 .PHONY: test
