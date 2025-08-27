@@ -66,7 +66,8 @@ patch: ## Bump patch version: 0.1.0 → 0.1.1 (auto commit/tag/changelog, no pus
 		--no-publish \
 		--no-push \
 		--no-verify \
-		--no-confirm
+		--no-confirm \
+		--execute
 
 .PHONY: minor
 minor: ## Bump minor version: 0.1.0 → 0.2.0 (auto commit/tag/changelog, no push/publish)
@@ -75,7 +76,8 @@ minor: ## Bump minor version: 0.1.0 → 0.2.0 (auto commit/tag/changelog, no pus
 		--no-publish \
 		--no-push \
 		--no-verify \
-		--no-confirm
+		--no-confirm \
+		--execute
 
 .PHONY: major
 major: ## Bump major version: 0.1.0 → 1.0.0 (auto commit/tag/changelog, no push/publish)
@@ -84,14 +86,16 @@ major: ## Bump major version: 0.1.0 → 1.0.0 (auto commit/tag/changelog, no pus
 		--no-publish \
 		--no-push \
 		--no-verify \
-		--no-confirm
+		--no-confirm \
+		--execute
 
 .PHONY: release
 release: ## Run interactive release (full control, with confirmation)
 	cargo release --workspace \
 		--no-publish \
 		--no-push \
-		--verify
+		--verify \
+		--execute
 
 # -----------------------------------------------------------------------------
 # Convenience Targets
