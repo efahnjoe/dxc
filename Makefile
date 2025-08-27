@@ -61,16 +61,40 @@ clean: ## Remove all generated artifacts (target directory)
 	cargo clean
 
 .PHONY: patch
-patch: ## Bump patch version: 0.1.0 → 0.1.1
-	cargo release patch --workspace
+patch: ## Bump patch version: 0.1.0 → 0.1.1, tag, update changelog (no push, no publish)
+	cargo release patch \
+		--workspace \
+		--no-publish \
+		--no-push \
+		--no-verify \
+		--no-confirm \
+		--pre-release-commit-message="chore: release v{{version}}" \
+		--tag-message="v{{version}}" \
+		--tag-prefix="v"
 
 .PHONY: minor
-minor: ## Bump minor version: 0.1.0 → 0.2.0
-	cargo release minor --workspace
+minor: ## Bump minor version: 0.1.0 → 0.2.0, tag, update changelog (no push, no publish)
+	cargo release minor \
+		--workspace \
+		--no-publish \
+		--no-push \
+		--no-verify \
+		--no-confirm \
+		--pre-release-commit-message="chore: release v{{version}}" \
+		--tag-message="v{{version}}" \
+		--tag-prefix="v"
 
 .PHONY: major
-major: ## Bump major version: 0.1.0 → 1.0.0
-	cargo release major --workspace
+major: ## Bump major version: 0.1.0 → 1.0.0, tag, update changelog (no push, no publish)
+	cargo release major \
+		--workspace \
+		--no-publish \
+		--no-push \
+		--no-verify \
+		--no-confirm \
+		--pre-release-commit-message="chore: release v{{version}}" \
+		--tag-message="v{{version}}" \
+		--tag-prefix="v"
 
 .PHONY: release
 release: ## Run interactive release
