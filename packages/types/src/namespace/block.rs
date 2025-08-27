@@ -59,9 +59,21 @@ pub enum Block {
     #[strum(serialize = "menu")]
     Menu,
 
+    #[serde(rename = "menu-item")]
+    #[strum(serialize = "menu-item")]
+    MenuItem,
+
     #[serde(rename = "teleport")]
     #[strum(serialize = "teleport")]
     Teleport,
+
+    #[serde(rename = "tooltip")]
+    #[strum(serialize = "tooltip")]
+    Tooltip,
+
+    #[serde(rename = "tooltip-v2")]
+    #[strum(serialize = "tooltip-v2")]
+    TooltipV2,
 
     #[serde(rename = "textarea")]
     #[strum(serialize = "textarea")]
