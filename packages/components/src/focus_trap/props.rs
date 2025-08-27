@@ -1,5 +1,5 @@
 use dioxus::prelude::*;
-use dxc_macros::{props,PropsDefault};
+use dxc_macros::{props, PropsDefault};
 
 props! {
     FocusTrapProps {
