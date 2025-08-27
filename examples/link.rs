@@ -16,9 +16,9 @@ pub fn app() -> Element {
                 "Visit Example"
             }
             DxcLink {
-                type_: "primary".to_string(),
+                type_: link::Type::Primary,
                 disabled: false,
-                underline: Some("always".to_string()),
+                underline: link::Underline::Always,
                 href: Some("https://example.com".to_string()),
                 target: Some("_blank".to_string()),
                 "Click me"
