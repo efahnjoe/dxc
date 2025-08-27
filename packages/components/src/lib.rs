@@ -15,6 +15,7 @@ mod menu;
 mod menu_item;
 mod teleport;
 mod transition;
+mod tooltip;
 
 pub use aside::DxcAside;
 pub use button::{DxcButton, DxcButtonGroup};
