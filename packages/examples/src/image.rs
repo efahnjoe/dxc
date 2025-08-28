@@ -1,11 +1,8 @@
 use dioxus::prelude::*;
 use dxc::prelude::*;
 
-pub fn main() {
-    dioxus::launch(app);
-}
-
-pub fn app() -> Element {
+#[component]
+pub fn Image() -> Element {
     let img_list = vec![
         String::from("https://picsum.photos/400/250?random=1"),
         String::from("https://picsum.photos/400/250?random=2"),
@@ -14,8 +11,6 @@ pub fn app() -> Element {
     ];
 
     rsx!(
-        document::Link{rel: "stylesheet", href: DXC_THEMES}
-
         div {
             style: "width: 200px; height: 200px;",
             DxcImage {

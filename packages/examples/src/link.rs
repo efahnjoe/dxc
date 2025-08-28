@@ -1,15 +1,9 @@
 use dioxus::prelude::*;
 use dxc::prelude::*;
 
-pub fn main() {
-    dioxus::launch(app);
-}
-
 #[component]
-pub fn app() -> Element {
+pub fn Link() -> Element {
     rsx!(
-        document::Link{rel: "stylesheet", href: DXC_THEMES}
-
         div {
             DxcLink {
                 href: "https://example.com".to_string(),

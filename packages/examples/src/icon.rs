@@ -1,14 +1,9 @@
 use dioxus::prelude::*;
 use dxc::prelude::*;
 
-pub fn main() {
-    dioxus::launch(app);
-}
-
-pub fn app() -> Element {
+#[component]
+pub fn Icon() -> Element {
     rsx!(
-        document::Link{rel: "stylesheet", href: DXC_THEMES}
-
         div {
             style: "font-size: 20px;",
             p { "There is {ICONS_COLLECTION.iter().len()} icons in this collection" }

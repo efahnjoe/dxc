@@ -1,17 +1,11 @@
 use dioxus::prelude::*;
 use dxc::prelude::*;
 
-pub fn main() {
-    dioxus::launch(app);
-}
-
 #[component]
-pub fn app() -> Element {
+pub fn Input() -> Element {
     let value = use_signal(|| String::new());
 
     rsx! {
-        document::Link { rel: "stylesheet", href: DXC_THEMES}
-
         div {
             style: "width: 200px",
             "Basic usage"

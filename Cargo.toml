@@ -4,6 +4,7 @@ members = [
   "packages/components",
   "packages/constants",
   "packages/dxc",
+  "packages/examples",
   "packages/hooks",
   "packages/macros",
   "packages/themes",
@@ -13,6 +14,7 @@ members = [
 
 [workspace.package]
 edition = "2021"
+rust-version = "1.89.0"
 version = "0.1.8"
 authors = ["efahnjoe"]
 license = "MIT"
@@ -35,32 +37,7 @@ once_cell = "1.21.3"
 serde = { version = "1.0.219", features = ["derive"] }
 strum = { version = "0.27.2", features = ["derive"] }
 
-# This is a "virtual package"
-# It is not meant to be published, but is used so "cargo run --example XYZ" works properly
-[package]
-name = "dxc-example"
-edition = "2021"
-version.workspace = true
-authors.workspace = true
-license.workspace = true
-repository.workspace = true
-homepage.workspace = true
-publish = false
-
-[dependencies]
-
-[dev-dependencies]
-dioxus = { workspace = true }
-dxc = { workspace = true }
-once_cell = { workspace = true }
-serde = { workspace = true }
-
-[features]
-default = ["web"]
-server = ["dioxus/server"]
-web = ["dioxus/web"]
-desktop = ["dioxus/desktop"]
-mobile = ["dioxus/mobile"]
+[profile]
 
 [profile.wasm-dev]
 inherits = "dev"
@@ -71,12 +48,3 @@ inherits = "dev"
 
 [profile.android-dev]
 inherits = "dev"
-
-
-[[example]]
-name = "container"
-path = "examples/container/src/main.rs"
-
-[[example]]
-name = "teleport"
-path = "examples/teleport/src/main.rs"
