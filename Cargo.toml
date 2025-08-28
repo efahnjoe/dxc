@@ -14,7 +14,7 @@ members = [
 [workspace.package]
 edition = "2021"
 rust-version = "1.89.0"
-version = "0.1.8"
+version = "0.1.9"
 authors = ["efahnjoe"]
 license = "MIT"
 repository = "https://github.com/efahnjoe/dxc"
@@ -23,14 +23,14 @@ readme = "README.md"
 
 [workspace.dependencies]
 dioxus = { version = "0.6.3", features = ["router", "fullstack"] }
-dxc = { version = "0.1.8", path = "packages/dxc" }
-dxc-components = { version = "0.1.8", path = "packages/components" }
-dxc-hooks = { version = "0.1.8", path = "packages/hooks" }
+dxc = { version = "0.1.9", path = "packages/dxc" }
+dxc-components = { version = "0.1.9", path = "packages/components" }
+dxc-hooks = { version = "0.1.9", path = "packages/hooks" }
 dxc-icons = "0.1.3"
-dxc-macros = { version = "0.1.8", path = "packages/macros" }
-dxc-themes = { version = "0.1.8", path = "packages/themes" }
-dxc-types = { version = "0.1.8", path = "packages/types" }
-dxc-utils = { version = "0.1.8", path = "packages/utils" }
+dxc-macros = { version = "0.1.9", path = "packages/macros" }
+dxc-themes = { version = "0.1.9", path = "packages/themes" }
+dxc-types = { version = "0.1.9", path = "packages/types" }
+dxc-utils = { version = "0.1.9", path = "packages/utils" }
 once_cell = "1.21.3"
 serde = { version = "1.0.219", features = ["derive"] }
 strum = { version = "0.27.2", features = ["derive"] }
