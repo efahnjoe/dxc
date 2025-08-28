@@ -1,0 +1,51 @@
+name: Publish to crates.io
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v5
+
+      - name: Cache Rust dependencies
+        uses: Swatinem/rust-cache@v2
+        with:
+          # Only save in the main branch.
+          save-if: ${{ github.ref == 'refs/heads/main' }}
+
+          # Similar to cache-all-crates.
+          # If `true` the workspace crates will be cached.
+          # Useful if the workspace contains libraries that are only updated sporadically.
+          # default: "false"
+          cache-workspace-crates: true
+
+          # Determines which crates are cached.
+          # If `true` all crates will be cached, otherwise only dependent crates will be cached.
+          # Useful if additional crates are used for CI tooling.
+          # default: "false"
+          cache-all-crates: true
+
+          # Determines whether workspace `target` directories are cached.
+          # If `false`, only the cargo registry will be cached.
+          # default: "true"
+          cache-targets: true
+
+      - name: Install Rust
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Build (trigger cache usage)
+        run: cargo check --workspace --all-targets
+
+      - name: Login to crates.io
+        run: cargo login ${{ secrets.CRATES_IO_TOKEN }}
+
+      - name: Publish all crates
+        run: cargo publish --all --allow-dirty
+        env:
+          CARGO_REGISTRY_TOKEN: ${{ secrets.CRATES_IO_TOKEN }}
