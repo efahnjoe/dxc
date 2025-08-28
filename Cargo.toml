@@ -2,7 +2,6 @@
 resolver = "2"
 members = [
   "packages/components",
-  "packages/constants",
   "packages/dxc",
   "packages/examples",
   "packages/hooks",
@@ -26,7 +25,6 @@ readme = "README.md"
 dioxus = { version = "0.6.3", features = ["router", "fullstack"] }
 dxc = { version = "0.1.8", path = "packages/dxc" }
 dxc-components = { version = "0.1.8", path = "packages/components" }
-dxc-constants = { version = "0.1.8", path = "packages/constants" }
 dxc-hooks = { version = "0.1.8", path = "packages/hooks" }
 dxc-icons = "0.1.3"
 dxc-macros = { version = "0.1.8", path = "packages/macros" }
