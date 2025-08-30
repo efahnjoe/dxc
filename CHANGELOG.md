@@ -1,10 +1,23 @@
-## [0.1.9] - 2025-08-28
+## [0.1.10] - 2025-08-30
+
+### 📚 Documentation
+
+- Add unified CHANGELOG.md for dxc package ([`d5aceee`](https://github.com/efahnjoe/dxc/commit/d5aceee84162026931b70268be5e4ebf3af867e3))
+
 
 ### ⚙️ Miscellaneous Tasks
 
 - Add CHANGELOG.md files for dxc packages ([`c3002f6`](https://github.com/efahnjoe/dxc/commit/c3002f69f6dec3a320917e6e7a3b2447e1a6e40c))
 
 - Release v0.1.9 (#13) ([`9685d16`](https://github.com/efahnjoe/dxc/commit/9685d16a9ca50fbd63fe8751fe3ff4b250735042))
+
+- Remove `release-plz` workflow ([`ddb4677`](https://github.com/efahnjoe/dxc/commit/ddb467728f389665effdbe8a280b1510f0dc8260))
+
+- Add GitHub Actions workflow to publish crate on tag push ([`c8d9c8e`](https://github.com/efahnjoe/dxc/commit/c8d9c8e06aae0face230bef27889d5ea7e15e2cb))
+
+- *(husky)* Remove error code from pre-commit hook ([`fc62449`](https://github.com/efahnjoe/dxc/commit/fc62449d074345668fa624715776bae4eca86c49))
+
+- *(release)* Release v0.1.10 ([`0c265de`](https://github.com/efahnjoe/dxc/commit/0c265de5958e6890e52d361d3c86a1afbcf3ee7e))
 
 ## [0.1.8] - 2025-08-28
 
