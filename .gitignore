@@ -1,2 +1,8 @@
+# Rust
 target/
+
+# NodeJs
 node_modules/
+
+# MacOS
+.DS_Store

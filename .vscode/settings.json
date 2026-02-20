@@ -6,6 +6,8 @@
   "editor.suggest.insertMode": "replace",
   "[rust]": {
     "editor.formatOnSave": true,
+    "editor.formatOnPaste": true,
+    "editor.formatOnSaveMode": "file",
     "editor.tabSize": 4,
     "editor.defaultFormatter": "rust-lang.rust-analyzer",
   },
