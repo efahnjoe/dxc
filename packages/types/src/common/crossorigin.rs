@@ -1,5 +1,4 @@
-use dioxus::dioxus_core::AttributeValue;
-use dioxus::prelude::IntoAttributeValue;
+use dioxus::dioxus_core::{AttributeValue, IntoAttributeValue};
 use serde::{Deserialize, Serialize};
 use strum::{Display, EnumString};
 
