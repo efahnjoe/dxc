@@ -11,8 +11,8 @@ use dxc_icons::{
     ArrowLeft, ArrowRight, Close, FullScreen, RefreshLeft, RefreshRight, ScaleToOriginal, ZoomIn,
     ZoomOut,
 };
-use dxc_types::namespace::Block;
 use dxc_macros::classes;
+use dxc_types::namespace::Block;
 
 #[component]
 pub fn DxcImageViewer(props: ImageViewerProps) -> Element {
@@ -270,7 +270,7 @@ pub fn DxcImageViewer(props: ImageViewerProps) -> Element {
                             for (index, item) in url_list().iter().enumerate() {
                                 if index == current_index() {
                                     img {
-                                        key: {index},
+                                        key: "{index}",
                                         src: "{item}",
                                         class: ns.e_(String::from("img")),
                                         style: img_style,
