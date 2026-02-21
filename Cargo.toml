@@ -23,14 +23,14 @@ readme = "README.md"
 
 [workspace.dependencies]
 dioxus = { version = "^0.7.3", features = ["router", "fullstack"] }
-dxc = { version = "0.1.11", path = "packages/dxc" }
-dxc-components = { version = "0.1.11", path = "packages/components" }
-dxc-hooks = { version = "0.1.11", path = "packages/hooks" }
+dxc = { version = "0.1.10", path = "packages/dxc" }
+dxc-components = { version = "0.1.10", path = "packages/components" }
+dxc-hooks = { version = "0.1.10", path = "packages/hooks" }
 dxc-icons = "^0.3.0"
 dxc-macros = { version = "0.1.10", path = "packages/macros" }
-dxc-themes = { version = "0.1.11", path = "packages/themes" }
-dxc-types = { version = "0.1.11", path = "packages/types" }
-dxc-utils = { version = "0.1.11", path = "packages/utils" }
+dxc-themes = { version = "0.1.10", path = "packages/themes" }
+dxc-types = { version = "0.1.10", path = "packages/types" }
+dxc-utils = { version = "0.1.10", path = "packages/utils" }
 once_cell = "^1.21.3"
 serde = { version = "^1.0.219", features = ["derive"] }
 strum = { version = "^0.27.2", features = ["derive"] }
