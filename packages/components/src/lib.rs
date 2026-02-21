@@ -1,3 +1,5 @@
+#![deprecated(note = "This crate is deprecated. Please switch to `dxc` for future updates.")]
+
 mod aside;
 mod button;
 mod container;
@@ -14,8 +16,8 @@ mod main;
 mod menu;
 mod menu_item;
 mod teleport;
-mod transition;
 mod tooltip;
+mod transition;
 
 pub use aside::DxcAside;
 pub use button::{DxcButton, DxcButtonGroup};
