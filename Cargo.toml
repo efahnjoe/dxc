@@ -1,41 +1,24 @@
-[workspace]
-resolver = "2"
-members = [
-  "packages/components",
-  "packages/dxc",
-  "packages/examples",
-  "packages/hooks",
-  "packages/macros",
-  "packages/themes",
-  "packages/types",
-  "packages/utils",
-]
-
-[workspace.package]
+[package]
+name = "dxc"
+description = "A concise, modern dioxus component library"
+keywords = ["ui", "component", "dioxus", "web", "desktop", "scss"]
 edition = "2024"
 rust-version = "1.89.0"
-version = "0.1.11"
+version = "1.0.0"
 authors = ["efahnjoe"]
 license = "MIT"
 repository = "https://github.com/efahnjoe/dxc"
 homepage = "https://github.com/efahnjoe/dxc#README.md"
 readme = "README.md"
 
-[workspace.dependencies]
+[dependencies]
 dioxus = { version = "^0.7.3", features = ["router", "fullstack"] }
-dxc = { version = "0.1.8", path = "packages/dxc" }
-dxc-components = { version = "0.1.8", path = "packages/components" }
-dxc-hooks = { version = "0.1.8", path = "packages/hooks" }
 dxc-icons = "^0.3.0"
-dxc-macros = { version = "0.1.8", path = "packages/macros" }
-dxc-themes = { version = "0.1.8", path = "packages/themes" }
-dxc-types = { version = "0.1.8", path = "packages/types" }
-dxc-utils = { version = "0.1.8", path = "packages/utils" }
+dxc-macros = "^0.2.0"
+dxc-theme-chalk = "0.1.0"
 once_cell = "^1.21.3"
-serde = { version = "^1.0.219", features = ["derive"] }
+serde = { version = "^1.0.228", features = ["derive"] }
 strum = { version = "^0.27.2", features = ["derive"] }
-
-[profile]
 
 [profile.wasm-dev]
 inherits = "dev"
@@ -46,3 +29,9 @@ inherits = "dev"
 
 [profile.android-dev]
 inherits = "dev"
+
+# Examples
+# If you want to run the example, try this: dx serve --plantform web --example [name]
+[[example]]
+name = "button"
+path = "examples/button/main.rs"
