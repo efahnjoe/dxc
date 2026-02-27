@@ -19,6 +19,66 @@
 
 - *(release)* Release v0.1.10 ([`0c265de`](https://github.com/efahnjoe/dxc/commit/0c265de5958e6890e52d361d3c86a1afbcf3ee7e))
 
+## 1.0.0 (2026-02-27)
+
+
+### Features
+
+* **Button:** implement customizable button component ([9d14df9](https://github.com/efahnjoe/dxc/commit/9d14df98d039cc8533e41972ad19172c49cd5d92))
+* **components/button:** introduce DxcButtonGroup component for button collections ([ef704a7](https://github.com/efahnjoe/dxc/commit/ef704a79ec4ca88ff71f890e04d23029e352f853))
+* **components/image:** introduce DxcImage component with enhanced features ([5848fc2](https://github.com/efahnjoe/dxc/commit/5848fc254557fdafa2d78910869c125df56ec4c1))
+* **components/tooltip:** scaffold Tooltip component structure ([2b99bc8](https://github.com/efahnjoe/dxc/commit/2b99bc86670977097f08671cd3d63e3fbeabdb87))
+* **components:** enhance container and icon components ([f9af4fc](https://github.com/efahnjoe/dxc/commit/f9af4fc9dffaf8151b54d6284f06e439856c7f48))
+* **constants:** introduce event code constants module ([391a7a8](https://github.com/efahnjoe/dxc/commit/391a7a82c67a7feaaf0edeaeaa2c94fe5e623885))
+* **dxc-components/focus_trap:** implement focus trapping component for accessibility ([3587279](https://github.com/efahnjoe/dxc/commit/35872796e6eb129ef2c1cbb7b7f86c909a5dfeaa))
+* **dxc-components/icon:** add id attribute support to Icon component ([a0419b5](https://github.com/efahnjoe/dxc/commit/a0419b57e022d36ebeeedc822f9a85a03522ea32))
+* **dxc-components/icon:** add onClick event handling ([7d497b0](https://github.com/efahnjoe/dxc/commit/7d497b0fdd78a428ed82bc05719879e46b828b6c))
+* **dxc-components/image_viewer:** add image viewer component with zoom and rotate support ([1f50889](https://github.com/efahnjoe/dxc/commit/1f50889915479f35047db40b681af7b53d1f6f75))
+* **dxc-components/input:** enhance Input component with new features and improvements ([f459be0](https://github.com/efahnjoe/dxc/commit/f459be00efef1cd0b5f03df5ad02d914ad24643b))
+* **dxc-components/teleprot:** add Teleport component ([de012c8](https://github.com/efahnjoe/dxc/commit/de012c8e6e426d79206d01cea7c38087c3390423))
+* **dxc-components/transition:** add Transition component ([9fbf77f](https://github.com/efahnjoe/dxc/commit/9fbf77f9e9c67e136aed7b39caa367da5743cd6d))
+* **dxc-components:** enable focus_trap and image_viewer, add teleport/transition, and re-export components ([48d7d8e](https://github.com/efahnjoe/dxc/commit/48d7d8e56a561f0a0b676920bc0d663d58f13fb1))
+* **dxc-macros/props_default:** introduce PropsDefault macro for configurable defaults ([53d69a8](https://github.com/efahnjoe/dxc/commit/53d69a854f2b5ed52ce1d3f1b1f2a3ccd81b39a5))
+* **dxc-macros/props:** enhance props macro with custom derive path support ([65cb249](https://github.com/efahnjoe/dxc/commit/65cb249fb6985f6e437bd2f8ed2139c87c4685d7))
+* **dxc-macros/props:** enhance Props macro with field attributes and improved parsing ([5cea766](https://github.com/efahnjoe/dxc/commit/5cea7668224a06a5e2c00a2c9ad6add47d28fe42))
+* **dxc-types/crossorigin:** add Crossorigin enum with trait implementations ([b3d872f](https://github.com/efahnjoe/dxc/commit/b3d872f4d61437a7b7eacab2207e175d0afb9bcd))
+* **dxc-types/direction:** add Direction enum for layout orientation ([2f2458d](https://github.com/efahnjoe/dxc/commit/2f2458d500321d898d1e8c1d6ee972eb17b50e53))
+* **dxc-types/direction:** add IntoAttributeValue impl for Direction with kebab-case serialization ([d945a1c](https://github.com/efahnjoe/dxc/commit/d945a1cb095fe41da8efcb9df6a388f8b0fcfdd7))
+* **dxc-types/namespace:** introduce namespace module with Block enum ([ce63865](https://github.com/efahnjoe/dxc/commit/ce63865a2270eea934c2a4484f990fc312c4f9eb))
+* **dxc-types/resize:** introduce Resize enum for DxcInput sizing control ([e37ec0c](https://github.com/efahnjoe/dxc/commit/e37ec0c7005f72036c513647b3135b1e4eb53c2e))
+* **dxc-types/size:** introduce Size enum with serialization and Dioxus support ([2dd4984](https://github.com/efahnjoe/dxc/commit/2dd49843b1fa1879ae98083d9d81b503708f3374))
+* **dxc-types:** add Fit and Loading enumerations ([2cfef8e](https://github.com/efahnjoe/dxc/commit/2cfef8e7fe1551de3d561a522e533292ec987a2b))
+* **dxc:** introduce dxc-types module and standardize imports ([59eca14](https://github.com/efahnjoe/dxc/commit/59eca14d855ddaaec37f2e37ae5a4fc23d18252e))
+* **examples/image:** enhance image component demo with dynamic content and progress indicators ([8fbd63c](https://github.com/efahnjoe/dxc/commit/8fbd63c01fdcfdb873f00c0c0456e8ad0286d67e))
+* **examples:** add Button component showcase ([8217165](https://github.com/efahnjoe/dxc/commit/82171654166c2e120b0412faa1e886b62b46c95c))
+* **examples:** add Input component usage examples ([8585b8c](https://github.com/efahnjoe/dxc/commit/8585b8c145a9f6764743608428c2c13a3e8fa3d1))
+* implement core layout components and theme system ([0046935](https://github.com/efahnjoe/dxc/commit/00469359939572c8c68aab5fe15581ec7742663c))
+* **macros:** introduce macro library for CSS classes and props ([f4d6f16](https://github.com/efahnjoe/dxc/commit/f4d6f16f90a7a80dcadf46724cdd197e30bcd531))
+* **macros:** refactor classes and props macros with procedural implementation ([3bc8da4](https://github.com/efahnjoe/dxc/commit/3bc8da42e6451da3f0aac1524bbacb5d10e8bd1a))
+* **macros:** support default values in props macro ([5307927](https://github.com/efahnjoe/dxc/commit/53079273a8ffb7c05e08a6e0e5c2da4cca99e580))
+* Refactor project into single-crate architecture ([#16](https://github.com/efahnjoe/dxc/issues/16)) ([7a24e72](https://github.com/efahnjoe/dxc/commit/7a24e72f5381a4bbb72f13997493c6d962def2ad))
+* **types/block:** add Textarea variant to Block enum ([c38cbea](https://github.com/efahnjoe/dxc/commit/c38cbea82ed922f4a9139aba26b9f77fae62ee61))
+* **types/namespace:** introduce new block types ([06049fc](https://github.com/efahnjoe/dxc/commit/06049fc4e31988116cb29875423bde8701b1d8c8))
+* **types/types:** introduce ButtonType enum for semantic button styling ([7c12232](https://github.com/efahnjoe/dxc/commit/7c122325b6eef21716e6403dfc55a76ccf5f127e))
+* **types/types:** introduce LinkType enum for semantic button styling ([fabd739](https://github.com/efahnjoe/dxc/commit/fabd739e23917bc3eacec06a2a926a2f0416c128))
+* **workspace:** bump version to 0.1.6 and update README feature status ([f2b983f](https://github.com/efahnjoe/dxc/commit/f2b983fb4eede90de719b785188955ae214af3de))
+* **workspace:** upgrade to Rust 2024 edition and update dependencies ([c9f0d2f](https://github.com/efahnjoe/dxc/commit/c9f0d2faf8c278c641eb8d010c7b60086e89909c))
+
+
+### Bug Fixes
+
+* **config:** correct cargo build target directory configuration ([062fcdc](https://github.com/efahnjoe/dxc/commit/062fcdc6a18ef7aaab59d7c348fd1c2817271df0))
+* **dxc-components/input:** correct clear icon visibility logic and interaction ([0467b95](https://github.com/efahnjoe/dxc/commit/0467b9515edcca2d650621cbc34de37aeeaf1512))
+* **dxc-components/input:** correct password input icon visibility ([71e3e23](https://github.com/efahnjoe/dxc/commit/71e3e23b03cbdc531ce4781aceb9b6e3e7f158e1))
+* **dxc-components/input:** fix password icon toggle and input state handling ([63b0ec4](https://github.com/efahnjoe/dxc/commit/63b0ec42a0c6d8dee444f100e08ba142e5b686d7))
+* **dxc-components/input:** resolve input value capture and password icon issues ([31d23af](https://github.com/efahnjoe/dxc/commit/31d23af0f08f21f61c36aadc2ca92410cda125a9))
+* **example:** correct DxcLink component property name ([38f03b9](https://github.com/efahnjoe/dxc/commit/38f03b92bcb729af0e97ceeb8e30f0aa93fa39ce))
+* **hooks:** correct namespace handling for None state in `UseNamespeace` ([ae6aa2c](https://github.com/efahnjoe/dxc/commit/ae6aa2c635aac0af52ffdb13ef6df5cbe108bf4a))
+* **hooks:** correct the naming of elements and modifiers in the BEM naming convention ([932af45](https://github.com/efahnjoe/dxc/commit/932af45e21cd7d40a9032e82e27d3348710155e0))
+* **hooks:** handle empty modifier in namespace `BEM` generation ([a1a18e2](https://github.com/efahnjoe/dxc/commit/a1a18e238914720c1e74ba157b160eeafa91ef2e))
+* **hooks:** improve `is_` function logic in `use_namespace` ([fd5a0a6](https://github.com/efahnjoe/dxc/commit/fd5a0a67d8d3c5b0b1dd7716725a5c29bbf22560))
+* **image-viewer:** fix key attribute ([90ae82b](https://github.com/efahnjoe/dxc/commit/90ae82b8e31bd0aaaea6642104d44276aafb2bfc))
+
 ## [0.1.8] - 2025-08-28
 
 ### 🚀 Features
@@ -255,4 +315,3 @@
 - Set up commit linting with Husky (Node.js) for Rust project ([`86c55b2`](https://github.com/efahnjoe/dxc/commit/86c55b25bec3db6ab1b909f3448c347ab3927507))
 
 - Add release-plz continuous release workflow ([`a1f3688`](https://github.com/efahnjoe/dxc/commit/a1f368832819912b3f7689d36ee2802b98dc9e06))
-
