@@ -1,7 +1,7 @@
 [package]
 name = "dxc"
 description = "A concise, modern dioxus component library"
-keywords = ["ui", "component", "dioxus", "web", "desktop", "scss"]
+keywords = ["ui", "component", "dioxus", "web", "desktop"]
 edition = "2024"
 rust-version = "1.89.0"
 version = "1.0.0"
