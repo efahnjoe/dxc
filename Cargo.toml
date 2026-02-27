@@ -32,6 +32,6 @@ inherits = "dev"
 
 # Examples
 # If you want to run the example, try this: dx serve --plantform web --example [name]
-[[example]]
-name = "button"
-path = "examples/button/main.rs"
+# [[example]]
+# name = "button"
+# path = "examples/button/main.rs"

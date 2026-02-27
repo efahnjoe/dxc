@@ -6,4 +6,4 @@ registry = "https://github.com/rust-lang/crates.io-index/"
 aliyun = { index = "https://mirrors.aliyun.com/crates.io-index/" }
 
 [build]
-target-dev = "target"
+target-dir = "target"
