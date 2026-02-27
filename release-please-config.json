@@ -1,0 +1,12 @@
+{
+  "$schema": "https://raw.githubusercontent.com/googleapis/release-please/main/schemas/config.json",
+  "packages": {
+    ".": {
+      "release-type": "rust",
+      "release-as": "1.0.0",
+      "include-v-in-tag": true,
+      "include-v-in-release-name": true,
+      "include-component-in-tag": false
+    }
+  }
+}
