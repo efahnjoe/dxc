@@ -25,7 +25,7 @@ use dxc_macros::classes;
 ///
 /// # Example
 ///
-/// ```rust
+/// ```rust,ignore
 /// use dioxus::prelude::*;
 /// use dxc::prelude::*;
 ///

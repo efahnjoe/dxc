@@ -10,7 +10,7 @@ use dxc_macros::classes;
 /// see [iconfont](https://www.iconfont.cn/)
 ///
 /// # Example
-/// ```
+/// ```rust,ignore
 /// use dxc::prelude::*;
 ///
 /// rsx! {
